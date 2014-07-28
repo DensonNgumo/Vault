@@ -13,10 +13,15 @@ class ChangeMasterKeyForm : public QDialog
 
 public:
     explicit ChangeMasterKeyForm(QWidget *parent = 0);
+    void SetDbID(QString);
     ~ChangeMasterKeyForm();
+
+private slots:
+    void on_buttonBox_Response_accepted();
 
 private:
     Ui::ChangeMasterKeyForm *ui;
+    QString dbID;
 };
 
 #endif // CHANGEMASTERKEYFORM_H

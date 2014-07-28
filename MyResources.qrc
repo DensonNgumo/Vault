@@ -1,1 +1,6 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/Images">
+        <file>placeholder.gif</file>
+        <file>member2.png</file>
+    </qresource>
+</RCC>

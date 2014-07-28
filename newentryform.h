@@ -13,10 +13,16 @@ class NewEntryForm : public QDialog
 
 public:
     explicit NewEntryForm(QWidget *parent = 0);
+    void setDatabaseID(QString id);
     ~NewEntryForm();
+
+private slots:
+
+    void on_buttonBox_response_accepted();
 
 private:
     Ui::NewEntryForm *ui;
+    QString databaseID;
 };
 
 #endif // NEWENTRYFORM_H
