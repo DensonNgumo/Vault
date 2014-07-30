@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTreeWidgetItem>
 #include <QtGui>
+#include "database.h"
 
 namespace Ui {
 class HomeScreen;
@@ -21,7 +22,17 @@ public:
     void AddRoot(QString name);
     void AddChild(QTreeWidgetItem *parent,QString name);
     void RemoveRoot();
+    void RefreshTree();
+    void RefreshPasswords();
+    void DeletePassword(QString);
+    void loadKeys(QString);
+    void RefreshKeys();
+    void DeleteKey(QString id);
+    void LockWorkspace();
+    void UnlockWorkspace();
+    void setDatabaseReference(Database*);
     QString getDatabaseID();
+    QString getGroupID();
     ~HomeScreen();
 
 private slots:
@@ -39,12 +50,36 @@ private slots:
 
     void on_actionAdd_Group_triggered();
 
+    void on_treeWidget_groups_itemClicked(QTreeWidgetItem *item, int column);
+
+    void on_actionEdit_Group_triggered();
+
+    void on_tableView_info_doubleClicked(const QModelIndex &index);
+
+    void on_actionDelete_Entry_triggered();
+
+    void on_tableView_info_clicked(const QModelIndex &index);
+
+    void on_tableView_keyInfo_doubleClicked(const QModelIndex &index);
+
+    void on_tableView_keyInfo_clicked(const QModelIndex &index);
+
+    void on_tabWidget_tabBarClicked(int index);
+
+    void on_actionLock_Workspace_triggered();
+
+    void on_actionDatabase_Settings_triggered();
+
 private:
     Ui::HomeScreen *ui;
     QString currentDbID;
     QString currentDbName;
-    QString groupName;
-    QTreeWidgetItem *root;
+    QString currentGroupName;
+    QString currentPassID;
+    QString currentKeyID;
+    Database* databaseRef;
+    bool locked;
+
 };
 
 #endif // HOMESCREEN_H

@@ -18,6 +18,7 @@ public:
     void setMainFormReference(HomeScreen*);
     void setGroupID(QString);
     void setDbID(QString);
+    void setEditFeatures(QString,QString);
     ~Groups();
 
 private slots:
@@ -28,6 +29,7 @@ private:
     HomeScreen* main;
     QString groupID;
     QString dbID;
+    bool edit;
 };
 
 #endif // GROUPS_H

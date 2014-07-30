@@ -7,12 +7,15 @@ class Serial
 {
 public:
     Serial();
-    void addEntry(QString newTitle,QString newKey,QString newNotes,QString id);
+    void addEntry(QString newTitle, QString newKey, QString newNotes, QString gID, QString id);
+    void editEntry(QString newTitle, QString newKey, QString newNotes, QString id);
 private:
     QString title;
     QString key;
     QString notes;
     QString dbID;
+    QString groupID;
+    QString keyID;
 
 };
 

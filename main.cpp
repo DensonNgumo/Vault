@@ -6,8 +6,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     HomeScreen w;
-    Database database;
-    database.connectionOpen();
+    Database *database=new Database();
+    database->connectionOpen();
+    w.setDatabaseReference(database);
     w.show();
 
     return a.exec();

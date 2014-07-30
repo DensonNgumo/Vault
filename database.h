@@ -12,9 +12,11 @@ public:
     void connectionClose();
     void SetMasterKey(QString key);
     void SetDbName(QString name);
+    void SetDbID(QString);
     void SetDescription(QString text);
     void SetUserName(QString name);
     void SaveSettings();
+    void EditSettings();
     void InsertDefaults();
     QString getDbID();
     QString getDbName();

@@ -15,6 +15,7 @@ class OpenDatabaseForm : public QDialog
 public:
     explicit OpenDatabaseForm(QWidget *parent = 0);
     void setMainFormReference(HomeScreen* mainForm);
+    void setLockFeatures(QString id);
     ~OpenDatabaseForm();
 
 private slots:
@@ -23,6 +24,8 @@ private slots:
 private:
     Ui::OpenDatabaseForm *ui;
     HomeScreen* main;
+    bool locked;
+    QString dbID;
 };
 
 #endif // OPENDATABASEFORM_H

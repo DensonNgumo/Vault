@@ -4,13 +4,13 @@
 Serial::Serial()
 {
 }
-void Serial::addEntry(QString newTitle, QString newKey, QString newNotes, QString id)
+void Serial::addEntry(QString newTitle, QString newKey, QString newNotes,QString gID, QString id)
 {
     //Validation Required!!!!
 
-    title=newTitle;key=newKey;notes=newNotes;dbID=id;
+    title=newTitle;key=newKey;notes=newNotes;dbID=id;groupID=gID;
     QSqlQuery entry;
-    entry.prepare("insert into serials(title,key,dbID,notes) values('"+title+"','"+key+"','"+dbID+"','"+notes+"')");
+    entry.prepare("insert into serials(title,serialKey,dbID,notes,groupID) values('"+title+"','"+key+"','"+dbID+"','"+notes+"','"+groupID+"')");
     if(entry.exec())
     {
         qDebug()<<"Serial entry added...";
@@ -19,5 +19,20 @@ void Serial::addEntry(QString newTitle, QString newKey, QString newNotes, QStrin
     else
     {
         qDebug()<<"Serial entry not added"<<entry.lastError().text();
+    }
+}
+void Serial::editEntry(QString newTitle, QString newKey,QString newNotes, QString id)
+{
+    //validation required!!!!!!
+    title=newTitle; key=newKey;notes=newNotes;keyID=id;
+    QSqlQuery edit;
+    edit.prepare("update serials set title='"+title+"',serialKey='"+key+"',notes='"+notes+"' where keyID='"+keyID+"'");
+    if(edit.exec())
+    {
+        qDebug()<<"Serial Key Entry edited...";
+    }
+    else
+    {
+        qDebug()<<"Serial Key Entry not edited..."<<edit.lastError().text();
     }
 }

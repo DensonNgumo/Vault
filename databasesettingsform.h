@@ -17,6 +17,7 @@ public:
     explicit DatabaseSettingsForm(QWidget *parent = 0);
     void setMasterKey(QString key);
     void setMainFormReference(HomeScreen* mainForm);
+    void setEdit(QString id);
     ~DatabaseSettingsForm();
 
 private slots:
@@ -26,7 +27,8 @@ private:
     Ui::DatabaseSettingsForm *ui;
     Database newDatabase;
     HomeScreen* main;
-    int dbID;
+    bool edit;
+    QString dbID;
 };
 
 #endif // DATABASESETTINGSFORM_H

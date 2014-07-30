@@ -28,9 +28,14 @@ void Database::connectionOpen()
 void Database::connectionClose()
 {
     db.close();
-    db.removeDatabase(QSqlDatabase::defaultConnection);
+   // db.removeDatabase(QSqlDatabase::defaultConnection);
     qDebug()<<"Database closed...";
 }
+void Database::SetDbID(QString id)
+{
+    dbID=id;
+}
+
 void Database::SetMasterKey(QString key)
 {
     masterKey=key;
@@ -50,7 +55,7 @@ void Database::SetUserName(QString name)
 void Database::SaveSettings()
 {
     QSqlQuery save;
-    save.prepare("insert into databases (dbName,masterKey,description,userName) values('"+dbName+"','"+masterKey+"','"+description+"','"+userName+"')");
+    save.prepare("insert into databases (dbName,masterKey,description,userName) values('"+dbName+"',HASHBYTES('sha1','"+masterKey+"'),'"+description+"','"+userName+"')");
     if(save.exec())
     {
         qDebug()<<"Saved...";
@@ -62,6 +67,21 @@ void Database::SaveSettings()
     }
 
 }
+void Database::EditSettings()
+{
+    QSqlQuery edit;
+    edit.prepare("update databases set dbName='"+dbName+"',description='"+description+"',userName='"+userName+"' where dbID='"+dbID+"'");
+    if(edit.exec())
+    {
+        qDebug()<<"Edited...";
+
+    }
+    else
+    {
+        qDebug()<<"Not Edited..."<<edit.lastError().text();
+    }
+}
+
 QString Database::getDbID()
 {
     QSqlQuery id;
@@ -87,7 +107,8 @@ void Database::InsertDefaults()
     QString id=getDbID();
     QString groupID;
     QString defaultGroupName="Default",title="Example",password="12345",userName="User123",url="www.deenze.com",notes="Notes";
-    QSqlQuery groupDefault,passwordDefault,getGroupID;
+    QString defaultKeyTitle="Software Y",key="xxxx-xxxx-xxxx-xxxx-xxxx";
+    QSqlQuery groupDefault,passwordDefault,getGroupID,keyDefault;
     groupDefault.prepare("insert into groups(groupName,dbID) values('"+defaultGroupName+"','"+id+"')");
     if(groupDefault.exec()){qDebug()<<"group inserted..";}
     getGroupID.prepare("select groupID from groups where groupName='"+defaultGroupName+"' and dbID='"+id+"'");
@@ -107,6 +128,15 @@ void Database::InsertDefaults()
     if(passwordDefault.exec())
     {
         qDebug()<<"Password inserted...";
+        keyDefault.prepare("insert into serials(dbID,title,serialKey,notes,groupID)values('"+id+"','"+defaultKeyTitle+"','"+key+"','"+notes+"','"+groupID+"')");
+        if(keyDefault.exec())
+        {
+            qDebug()<<"Sample Key inserted...";
+        }
+        else
+        {
+            qDebug()<<"Sample Key not added..."<<keyDefault.lastError().text();
+        }
 
     }
     else
