@@ -29,3 +29,8 @@ void MasterPasswordForm::on_buttonBox_Response_accepted()
     this->hide();
     settings.exec();
 }
+
+void MasterPasswordForm::on_buttonBox_Response_rejected()
+{
+    this->close();
+}

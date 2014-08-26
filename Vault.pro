@@ -1,6 +1,13 @@
 #-------------------------------------------------
 #
+#
+#
+# Project Vault 1.0.0
 # Project created by QtCreator 2014-07-21T12:52:35
+# Developed by Denson Ngumo
+# Property of Deenze
+#
+#
 #
 #-------------------------------------------------
 

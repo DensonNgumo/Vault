@@ -23,6 +23,8 @@ public:
 private slots:
     void on_buttonBox_Response_accepted();
 
+    void on_buttonBox_Response_rejected();
+
 private:
     Ui::DatabaseSettingsForm *ui;
     Database newDatabase;

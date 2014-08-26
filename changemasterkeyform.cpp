@@ -33,3 +33,8 @@ void ChangeMasterKeyForm::on_buttonBox_Response_accepted()
     }
 
 }
+
+void ChangeMasterKeyForm::on_buttonBox_Response_rejected()
+{
+    this->close();
+}

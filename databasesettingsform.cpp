@@ -56,3 +56,8 @@ void DatabaseSettingsForm::on_buttonBox_Response_accepted()
 
 
 }
+
+void DatabaseSettingsForm::on_buttonBox_Response_rejected()
+{
+    this->close();
+}

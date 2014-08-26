@@ -129,3 +129,13 @@ void NewEntryForm::on_buttonBox_keyResponse_accepted()
         this->close();
     }
 }
+
+void NewEntryForm::on_buttonBox_response_rejected()
+{
+    this->close();
+}
+
+void NewEntryForm::on_buttonBox_keyResponse_rejected()
+{
+    this->close();
+}

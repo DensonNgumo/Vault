@@ -99,3 +99,8 @@ void Groups::on_buttonBox_Response_accepted()
 
 
 }
+
+void Groups::on_buttonBox_Response_rejected()
+{
+    this->close();
+}

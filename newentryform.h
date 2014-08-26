@@ -29,6 +29,10 @@ private slots:
 
     void on_buttonBox_keyResponse_accepted();
 
+    void on_buttonBox_response_rejected();
+
+    void on_buttonBox_keyResponse_rejected();
+
 private:
     Ui::NewEntryForm *ui;
     QString databaseID;

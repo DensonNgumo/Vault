@@ -5,6 +5,8 @@
 #include <QTreeWidgetItem>
 #include <QtGui>
 #include "database.h"
+#include <memory>
+
 
 namespace Ui {
 class HomeScreen;
@@ -30,9 +32,12 @@ public:
     void DeleteKey(QString id);
     void LockWorkspace();
     void UnlockWorkspace();
-    void setDatabaseReference(Database*);
+    std::tr1::shared_ptr<Database>dbPtr;
     QString getDatabaseID();
     QString getGroupID();
+
+
+
     ~HomeScreen();
 
 private slots:
@@ -77,8 +82,9 @@ private:
     QString currentGroupName;
     QString currentPassID;
     QString currentKeyID;
-    Database* databaseRef;
     bool locked;
+
+
 
 };
 

@@ -13,40 +13,84 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 8, 12);</string>
+  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>10</y>
-     <width>331</width>
-     <height>41</height>
+     <x>0</x>
+     <y>0</y>
+     <width>481</width>
+     <height>71</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: white;
+
+
+
+</string>
+   </property>
    <property name="text">
-    <string>Change Master Key</string>
+    <string>    Change Master Key</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>80</y>
-     <width>391</width>
-     <height>51</height>
+     <x>20</x>
+     <y>90</y>
+     <width>441</width>
+     <height>61</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;
+</string>
+   </property>
    <property name="text">
-    <string>You are changing the composite master key for the currently open database</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are changing the composite master key&lt;/p&gt;&lt;p&gt; for the currently open database&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>140</y>
-     <width>101</width>
+     <y>170</y>
+     <width>141</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;</string>
    </property>
    <property name="text">
     <string>Master Password:</string>
@@ -56,10 +100,21 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>180</y>
-     <width>61</width>
-     <height>16</height>
+     <y>200</y>
+     <width>71</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;</string>
    </property>
    <property name="text">
     <string>Repeat:</string>
@@ -68,31 +123,51 @@
   <widget class="QLineEdit" name="lineEdit_MasterPass">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>140</y>
-     <width>113</width>
+     <x>190</x>
+     <y>170</y>
+     <width>151</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:white;
+</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_RepeatPass">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>180</y>
-     <width>113</width>
+     <x>190</x>
+     <y>200</y>
+     <width>151</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:white;</string>
    </property>
   </widget>
   <widget class="QToolButton" name="toolButton">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>150</y>
-     <width>25</width>
-     <height>19</height>
+     <x>380</x>
+     <y>180</y>
+     <width>41</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:black;
+color:white;
+border-style:outset;
+border-width:2px;
+border-color:white;
+border-radius:10px;
+
+padding:6px;</string>
    </property>
    <property name="text">
     <string>...</string>
@@ -101,11 +176,17 @@
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>250</y>
-     <width>441</width>
+     <x>0</x>
+     <y>80</y>
+     <width>481</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;</string>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
@@ -114,14 +195,59 @@
   <widget class="QDialogButtonBox" name="buttonBox_Response">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>290</y>
-     <width>156</width>
-     <height>23</height>
+     <x>80</x>
+     <y>260</y>
+     <width>321</width>
+     <height>61</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:black;
+color:white;
+border-style:outset;
+border-width:2px;
+border-color:white;
+border-radius:10px;
+min-width:10em;
+padding:6px;</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
    </property>
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+   <property name="centerButtons">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>70</y>
+     <width>481</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:black;</string>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>240</y>
+     <width>441</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
    </property>
   </widget>
  </widget>

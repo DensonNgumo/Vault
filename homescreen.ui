@@ -16,6 +16,13 @@
   <property name="windowTitle">
    <string>Vault</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="MyResources.qrc">
+    <normaloff>:/Images/member2.png</normaloff>:/Images/member2.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -24,6 +31,9 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <widget class="QTreeWidget" name="treeWidget_groups">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="dragEnabled">
         <bool>false</bool>
        </property>
@@ -43,11 +53,17 @@
        </column>
       </widget>
       <widget class="QTabWidget" name="tabWidget">
+       <property name="styleSheet">
+        <string notr="true">color:red;</string>
+       </property>
        <property name="tabPosition">
         <enum>QTabWidget::North</enum>
        </property>
+       <property name="tabShape">
+        <enum>QTabWidget::Rounded</enum>
+       </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -56,6 +72,9 @@
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
           <widget class="QTableView" name="tableView_info">
+           <property name="styleSheet">
+            <string notr="true">color:black;</string>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -78,7 +97,11 @@
         </attribute>
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
-          <widget class="QTableView" name="tableView_keyInfo"/>
+          <widget class="QTableView" name="tableView_keyInfo">
+           <property name="styleSheet">
+            <string notr="true">color:black;</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -93,10 +116,29 @@
      <x>0</x>
      <y>0</y>
      <width>887</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">spacing:20px;
+padding:1px 4px;
+border-radius:4px;
+color:red;
+</string>
+   </property>
    <widget class="QMenu" name="menu_File">
+    <property name="styleSheet">
+     <string notr="true">color:grey;
+</string>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
@@ -110,6 +152,9 @@
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
+    <property name="styleSheet">
+     <string notr="true">color:grey;</string>
+    </property>
     <property name="title">
      <string>Edit</string>
     </property>
@@ -140,6 +185,17 @@
      <string>Tools</string>
     </property>
     <widget class="QMenu" name="menuDatabase_Tools">
+     <property name="font">
+      <font>
+       <family>Tekton Pro</family>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:red;</string>
+     </property>
      <property name="title">
       <string>Database Tools</string>
      </property>
@@ -177,105 +233,273 @@
    <property name="text">
     <string>New Database</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionOpen_Database">
    <property name="text">
     <string>Open Database</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionDatabase_Settings">
    <property name="text">
     <string>Database Settings</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionChange_Master_Key">
    <property name="text">
     <string>Change Master Key</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionPrint">
    <property name="text">
     <string>Print</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionLock_Workspace">
    <property name="text">
     <string>Lock Workspace</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionAdd_Group">
    <property name="text">
     <string>Add Group</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionEdit_Group">
    <property name="text">
     <string>Edit Group</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionAdd_New_Entry">
    <property name="text">
     <string>Add New Entry</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionEdit_View_Entry">
    <property name="text">
     <string>Edit/View Entry</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionDuplicate_Entry">
    <property name="text">
     <string>Duplicate Entry</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionDelete_Entry">
    <property name="text">
     <string>Delete Entry</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionSelect_All">
    <property name="text">
     <string>Select All</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionFind">
    <property name="text">
     <string>Find</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionShow_Toolbar">
    <property name="text">
     <string>Show Toolbar</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionShow_Entry_View">
    <property name="text">
     <string>Show Entry View</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionAlways_on_Top">
    <property name="text">
     <string>Always on Top</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionGenerate_Password">
    <property name="text">
     <string>Generate Password</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionOptions">
    <property name="text">
     <string>Options</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionDatabase_Maintenance">
    <property name="text">
     <string>Database Maintenance</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </action>
   <action name="actionDelete_Duplicate_Entries">
@@ -292,14 +516,32 @@
    <property name="text">
     <string>Help Contents</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
   <action name="actionAbout_Vault">
    <property name="text">
     <string>About Vault</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="MyResources.qrc"/>
+ </resources>
  <connections/>
 </ui>

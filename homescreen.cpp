@@ -12,7 +12,7 @@
 
 HomeScreen::HomeScreen(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::HomeScreen)
+    ui(new Ui::HomeScreen),dbPtr(new Database)
 {
     ui->setupUi(this);
     currentDbName="None";
@@ -24,20 +24,17 @@ HomeScreen::HomeScreen(QWidget *parent) :
     currentPassID="None";
     locked=false;
     LockWorkspace();
-
-
-
 }
 
 HomeScreen::~HomeScreen()
 {
     delete ui;
-    delete databaseRef;
+   // delete databaseRef;
 }
-void HomeScreen::setDatabaseReference(Database * ref)
+/*void HomeScreen::setDatabaseReference(Database * ref)
 {
-    databaseRef=ref;
-}
+   // databaseRef=ref;
+}*/
 
 void HomeScreen::setDatabaseID(QString id)
 {
@@ -242,6 +239,7 @@ void HomeScreen::LockWorkspace()
     this->ui->actionEdit_View_Entry->setDisabled(true);
     this->ui->actionDuplicate_Entry->setDisabled(true);
     this->ui->actionEdit_Group->setDisabled(true);
+
     if(locked)
     {
         ui->actionLock_Workspace->setEnabled(true);
@@ -317,15 +315,13 @@ void HomeScreen::on_actionAdd_New_Entry_triggered()
 
 void HomeScreen::on_actionExit_triggered()
 {
-
-    databaseRef->connectionClose();
+    dbPtr->connectionClose();
     QMessageBox::information(this,tr("Vault"),tr("Thank you for using Vault Password Safe"));
     this->close();
 }
 
 void HomeScreen::on_actionChange_Master_Key_triggered()
 {
-
         ChangeMasterKeyForm form;
         form.SetDbID(currentDbID);
         form.exec();
@@ -476,16 +472,15 @@ void HomeScreen::on_tabWidget_tabBarClicked(int index)
 void HomeScreen::on_actionLock_Workspace_triggered()
 {
     locked=true;
+    LockWorkspace();
     OpenDatabaseForm lock;
     lock.setLockFeatures(currentDbID);
     lock.setMainFormReference(this);
     lock.setModal(true);
-    LockWorkspace();
+    lock.exec();
+    if(locked==true)
     this->showMinimized();
 
-
-
-    lock.exec();
 }
 
 
