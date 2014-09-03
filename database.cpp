@@ -15,10 +15,7 @@ void Database::connectionOpen()
     db.setDatabaseName(dsn);
           if(db.open())
           {
-              qDebug()<<"Opened...";
-
-
-
+              qDebug()<<"Opened...";//database opened
           }
           else
           {
@@ -27,8 +24,7 @@ void Database::connectionOpen()
 }
 void Database::connectionClose()
 {
-    db.close();
-   // db.removeDatabase(QSqlDatabase::defaultConnection);
+    db.close();//close database
     qDebug()<<"Database closed...";
 }
 void Database::SetDbID(QString id)

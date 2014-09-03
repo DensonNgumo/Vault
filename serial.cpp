@@ -7,7 +7,6 @@ Serial::Serial()
 void Serial::addEntry(QString newTitle, QString newKey, QString newNotes,QString gID, QString id)
 {
     //Validation Required!!!!
-
     title=newTitle;key=newKey;notes=newNotes;dbID=id;groupID=gID;
     QSqlQuery entry;
     entry.prepare("insert into serials(title,serialKey,dbID,notes,groupID) values('"+title+"','"+key+"','"+dbID+"','"+notes+"','"+groupID+"')");

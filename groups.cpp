@@ -1,18 +1,20 @@
 #include "groups.h"
 #include "ui_groups.h"
 #include "homescreen.h"
+#include <QMessageBox>
 
 Groups::Groups(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Groups)
+    ui(new Ui::Groups),edit(false)
 {
     ui->setupUi(this);
-    edit=false;
 }
 
 Groups::~Groups()
 {
     delete ui;
+    main=0;
+    delete main;
 }
 void Groups::setGroupID(QString id)
 {
@@ -29,7 +31,6 @@ void Groups::setMainFormReference(HomeScreen * ref)
 }
 void Groups::setEditFeatures(QString name, QString id)
 {
-    //validate name and id
     dbID=id;
     ui->label_Heading->setText("Edit Group");
     edit=true;
@@ -54,35 +55,48 @@ void Groups::setEditFeatures(QString name, QString id)
 
 void Groups::on_buttonBox_Response_accepted()
 {
-    //validate!!!!!!!!!
     QString groupName=ui->lineEdit_Name->text();
+    if(groupName.isEmpty())
+    {
+        QMessageBox::warning(this,tr("Groups"),tr("Please enter the name of the group..."));
+        return;
+    }
     QString notes=ui->plainTextEdit_Notes->toPlainText();
     QSqlQuery save;
-    if(edit)
+    if(edit)//if editing an existent group
     {
-        save.prepare("update groups set groupName='"+groupName+"' where groupID='"+groupID+"'");
+        save.prepare("update groups set groupName='"+groupName+"',Notes='"+notes+"' where groupID='"+groupID+"'");
         if(save.exec())
-        {
-            save.prepare("update groups set Notes='"+notes+"' where groupID='"+groupID+"'");
-            if(save.exec())
-            {
+        {                 
                 qDebug()<<"Group Edited...";
                 main->RefreshTree();
                 this->close();
-            }
-            else
-            {
-                qDebug()<<save.lastError().text();
-            }
         }
         else
         {
             qDebug()<<save.lastError().text();
         }
-
     }
-    else
+    else//creating a new group
     {
+        QSqlQuery check;//check if there is already a group with a similar name in that database
+        check.prepare("select count(*) from groups where groupName='"+groupName+"' and dbID='"+dbID+"'");
+        if(check.exec())
+        {
+            int count;
+            while(check.next())
+            {
+               count=check.value(0).toInt();
+            }
+            if(count>0)
+            {
+                QMessageBox::warning(this,tr("Groups"),tr("A Group with that name already exists..."));
+                return;
+            }
+
+        }
+        else
+           { qDebug()<<check.lastError().text(); return;}
         save.prepare("insert into groups(groupName,dbID,Notes)values('"+groupName+"','"+dbID+"','"+notes+"')");
         if(save.exec())
         {
@@ -96,7 +110,6 @@ void Groups::on_buttonBox_Response_accepted()
         }
         qDebug()<<notes;
     }
-
 
 }
 

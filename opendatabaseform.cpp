@@ -5,21 +5,22 @@
 
 OpenDatabaseForm::OpenDatabaseForm(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::OpenDatabaseForm)
+    ui(new Ui::OpenDatabaseForm),locked(false),passwordVisible(false)
 {
     ui->setupUi(this);
     QSqlQuery load;
     QSqlQueryModel *dbCombo=new QSqlQueryModel();
-    load.prepare("select dbName from databases");
+    load.prepare("select dbName from databases");//load all database names to the combobox
     load.exec();
     dbCombo->setQuery(load);
     ui->comboBox_dbNames->setModel(dbCombo);
-    locked=false;
 }
 
 OpenDatabaseForm::~OpenDatabaseForm()
 {
     delete ui;
+    main=0;
+    delete main;
 }
 void OpenDatabaseForm::setMainFormReference(HomeScreen *mainForm)
 {
@@ -36,11 +37,17 @@ void OpenDatabaseForm::setLockFeatures(QString id)
 
 void OpenDatabaseForm::on_pushButton_open_clicked()
 {
-    if(locked)
+    QString masterKey=ui->lineEdit_masterPass->text();
+    if(masterKey.isEmpty())
+    {
+        QMessageBox::warning(this,tr("Open Database"),tr("Please enter the master password..."));
+        return;
+    }
+    if(locked)//Opening a currently locked database
     {
         int count;
         QSqlQuery open;
-        open.prepare("select count(*) from databases where dbID='"+dbID+"' and masterKey=HASHBYTES('sha1','"+ui->lineEdit_masterPass->text()+"')");
+        open.prepare("select count(*) from databases where dbID='"+dbID+"' and masterKey=HASHBYTES('sha1','"+masterKey+"')");
         if(open.exec())
           {
              while(open.next())
@@ -49,7 +56,7 @@ void OpenDatabaseForm::on_pushButton_open_clicked()
                  qDebug()<<QString::number(count)<<dbID;
 
              }
-             if(count==1)
+             if(count==1)//if password is correct
              {
                  main->UnlockWorkspace();
                  this->close();
@@ -59,28 +66,40 @@ void OpenDatabaseForm::on_pushButton_open_clicked()
                  QMessageBox::information(this,tr("Lock"),tr("Check password entered..."));
              }
 
-
           }
          else
           {
              qDebug()<<open.lastError().text();
           }
     }
-    else
+    else//opening a new database
     {
         main->RemoveRoot();
         QSqlQuery open;
-        open.prepare("select dbID from databases where dbName='"+ui->comboBox_dbNames->currentText()+"' and masterKey=HASHBYTES('sha1','"+ui->lineEdit_masterPass->text()+"')");
+        QString dbName=ui->comboBox_dbNames->currentText();
+        open.prepare("select dbID from databases where dbName='"+dbName+"' and masterKey=HASHBYTES('sha1','"+masterKey+"')");
         if(open.exec())
           {
+            int count=0;
              while(open.next())
              {
-                main->setDatabaseID(open.value(0).toString());
-                main->setDatabaseName(ui->comboBox_dbNames->currentText());
-                main->UnlockWorkspace();
+                count++;
+                dbID=open.value(0).toString();
 
              }
-              this->close();
+             if(count==1)//if correct password entered
+             {
+                 main->setDatabaseID(dbID);
+                 main->setDatabaseName(dbName);
+                 main->UnlockWorkspace();
+                 this->close();
+             }
+             else
+             {
+                 QMessageBox::warning(this,tr("Open Database"),tr("Check password entered..."));
+                 return;
+             }
+
           }
          else
           {
@@ -88,4 +107,18 @@ void OpenDatabaseForm::on_pushButton_open_clicked()
           }
     }
 
+}
+
+void OpenDatabaseForm::on_toolButton_passwordVisible_clicked()
+{
+    if(passwordVisible)
+    {
+        ui->lineEdit_masterPass->setEchoMode(QLineEdit::EchoMode::Password);
+        passwordVisible=false;
+    }
+    else
+    {
+        ui->lineEdit_masterPass->setEchoMode(QLineEdit::EchoMode::Normal);
+        passwordVisible=true;
+    }
 }

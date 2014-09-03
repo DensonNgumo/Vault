@@ -24,9 +24,12 @@ private slots:
 
     void on_buttonBox_Response_rejected();
 
+    void on_pushButton_passwordView_clicked();
+
 private:
     Ui::MasterPasswordForm *ui;
     HomeScreen* mainForm;
+    bool passwordVisible;
 };
 
 #endif // MASTERPASSWORDFORM_H

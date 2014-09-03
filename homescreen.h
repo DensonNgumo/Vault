@@ -32,6 +32,7 @@ public:
     void DeleteKey(QString id);
     void LockWorkspace();
     void UnlockWorkspace();
+    void DeleteGroup(QString);
     std::tr1::shared_ptr<Database>dbPtr;
     QString getDatabaseID();
     QString getGroupID();
@@ -74,6 +75,10 @@ private slots:
     void on_actionLock_Workspace_triggered();
 
     void on_actionDatabase_Settings_triggered();
+
+    void on_actionDelete_Group_triggered();
+
+    void on_actionAbout_Vault_triggered();
 
 private:
     Ui::HomeScreen *ui;

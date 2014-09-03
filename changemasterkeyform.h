@@ -21,9 +21,12 @@ private slots:
 
     void on_buttonBox_Response_rejected();
 
+    void on_toolButton_Visible_clicked();
+
 private:
     Ui::ChangeMasterKeyForm *ui;
     QString dbID;
+    bool passwordVisible;
 };
 
 #endif // CHANGEMASTERKEYFORM_H

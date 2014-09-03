@@ -33,6 +33,10 @@ private slots:
 
     void on_buttonBox_keyResponse_rejected();
 
+
+
+    void on_toolButton_passwordVisible_clicked();
+
 private:
     Ui::NewEntryForm *ui;
     QString databaseID;
@@ -42,6 +46,7 @@ private:
     HomeScreen* main;
     bool edit;
     bool keyEdit;
+    bool passwordVisible;
 
 };
 

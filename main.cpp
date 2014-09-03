@@ -1,16 +1,13 @@
 #include "homescreen.h"
 #include <QApplication>
 #include"database.h"
-#include <memory>
-
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     HomeScreen w;
-    w.dbPtr->connectionOpen();
-    w.show();
-
+    w.dbPtr->connectionOpen();//connect to database
+    w.show();//display MainForm
     return a.exec();
 
 }

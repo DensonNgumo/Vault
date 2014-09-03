@@ -18,6 +18,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Vault
 TEMPLATE = app
 
+RC_FILE=Vault.rc
 
 SOURCES += main.cpp\
         homescreen.cpp \
@@ -29,7 +30,8 @@ SOURCES += main.cpp\
     serial.cpp \
     newentryform.cpp \
     changemasterkeyform.cpp \
-    groups.cpp
+    groups.cpp \
+    about.cpp
 
 
 HEADERS  += homescreen.h \
@@ -41,7 +43,8 @@ HEADERS  += homescreen.h \
     serial.h \
     newentryform.h \
     changemasterkeyform.h \
-    groups.h
+    groups.h \
+    about.h
 
 
 FORMS    += homescreen.ui \
@@ -50,7 +53,8 @@ FORMS    += homescreen.ui \
     opendatabaseform.ui \
     newentryform.ui \
     changemasterkeyform.ui \
-    groups.ui
+    groups.ui \
+    about.ui
 
 
 RESOURCES += \

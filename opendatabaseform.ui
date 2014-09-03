@@ -11,7 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Vault</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="MyResources.qrc">
+    <normaloff>:/Images/member2.png</normaloff>
+    <normalon>:/Images/member2.png</normalon>
+    <activeon>:/Images/member2.png</activeon>:/Images/member2.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:red;</string>
@@ -68,7 +74,7 @@ padding:6px;</string>
     <string notr="true">background-color:white;</string>
    </property>
    <property name="text">
-    <string>Enter Master Key</string>
+    <string>                                               Enter Master Key</string>
    </property>
   </widget>
   <widget class="Line" name="line">
@@ -188,13 +194,43 @@ min-width:6em;</string>
          <string notr="true">background-color:white;
 selection-background-color:red;</string>
         </property>
+        <property name="maxLength">
+         <number>50</number>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
        </widget>
       </item>
      </layout>
     </item>
    </layout>
   </widget>
+  <widget class="QToolButton" name="toolButton_passwordVisible">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>120</y>
+     <width>41</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:black;
+color:white;
+border-style:outset;
+border-width:2px;
+border-color:white;
+border-radius:10px;
+padding:6px;</string>
+   </property>
+   <property name="text">
+    <string>...</string>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="MyResources.qrc"/>
+ </resources>
  <connections/>
 </ui>

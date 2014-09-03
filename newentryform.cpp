@@ -3,19 +3,20 @@
 #include "password.h"
 #include "serial.h"
 #include <Qtsql>
+#include <QMessageBox>
 
 NewEntryForm::NewEntryForm(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::NewEntryForm)
+    ui(new Ui::NewEntryForm),edit(false),keyEdit(false),passwordVisible(false)
 {
     ui->setupUi(this);
-    edit=false;
-    keyEdit=false;
 }
 
 NewEntryForm::~NewEntryForm()
 {
     delete ui;
+    main=0;
+    delete main;
 }
 void NewEntryForm::setDatabaseID(QString id)
 {
@@ -53,7 +54,7 @@ void NewEntryForm::setEditFeatures(QString id)
     {
         while(fill.next())
         {
-            ui->lineEdit_notes->setText(fill.value(3).toString());
+            ui->plainTextEdit_Notes->setPlainText(fill.value(3).toString());
             ui->lineEdit_password->setText(fill.value(2).toString());
             ui->lineEdit_passwordTitle->setText(fill.value(0).toString());
             ui->lineEdit_url->setText(fill.value(4).toString());
@@ -93,38 +94,66 @@ void NewEntryForm::setKeyEditFeatures(QString id)
 
 void NewEntryForm::on_buttonBox_response_accepted()
 {  
-    if(edit)
+    QString title,userName,pass,pass2,notes,url;
+    pass=ui->lineEdit_password->text();
+    pass2=ui->lineEdit_password2->text();
+    if(pass.isEmpty())
+    {
+        QMessageBox::warning(this,tr("Entry"),tr("Please enter a passsword..."));
+        return;
+    }
+    if(!passwordVisible)
+    {
+        if(pass!=pass2)
+        {
+            QMessageBox::warning(this,tr("Entry"),tr("Both passwords must match..."));
+            return;
+        }
+    }
+    title=ui->lineEdit_passwordTitle->text();
+    userName=ui->lineEdit_userName->text();
+    notes=ui->plainTextEdit_Notes->toPlainText();
+    url=ui->lineEdit_url->text();
+    if(edit)//editing a current password entry
     {
         Password editEntry;
-        editEntry.editEntry(ui->lineEdit_passwordTitle->text(),ui->lineEdit_userName->text(),ui->lineEdit_password->text(),ui->lineEdit_notes->text(),ui->lineEdit_url->text(),passID);
+        editEntry.editEntry(title,userName,pass,notes,url,passID);
         main->RefreshPasswords();
         this->close();
 
     }
-    else
+    else//adding a new password entry
     {
         Password addEntry;
-        addEntry.addNewEntry(ui->lineEdit_passwordTitle->text(),ui->lineEdit_userName->text(),ui->lineEdit_password->text(),ui->lineEdit_notes->text(),ui->lineEdit_url->text(),groupID,databaseID);
+        addEntry.addNewEntry(title,userName,pass,notes,url,groupID,databaseID);
         main->RefreshPasswords();
         this->close();
     }
-
-
 }
 
 void NewEntryForm::on_buttonBox_keyResponse_accepted()
 {
-    if(keyEdit)
+    QString title,key,notes;    
+    key=ui->lineEdit_key->text();
+    if(key.isEmpty())
+    {
+        QMessageBox::warning(this,tr("Entry"),tr("Please enter the key value"));
+        return;
+    }
+    title=ui->lineEdit_keyTitle->text();
+    notes=ui->plainTextEdit_keyNotes->toPlainText();
+
+    if(keyEdit)//editing a key entry
     {
         Serial editEntry;
-        editEntry.editEntry(ui->lineEdit_keyTitle->text(),ui->lineEdit_key->text(),ui->plainTextEdit_keyNotes->toPlainText(),keyID);
+        editEntry.editEntry(title,key,notes,keyID);
         main->RefreshKeys();
         this->close();
     }
-    else
+    else//adding a new key entry
     {
         Serial addEntry;
-        addEntry.addEntry(ui->lineEdit_keyTitle->text(),ui->lineEdit_key->text(),ui->plainTextEdit_keyNotes->toPlainText(),groupID,databaseID);
+        addEntry.addEntry(title,key,notes,groupID,databaseID);
         main->RefreshKeys();
         this->close();
     }
@@ -138,4 +167,20 @@ void NewEntryForm::on_buttonBox_response_rejected()
 void NewEntryForm::on_buttonBox_keyResponse_rejected()
 {
     this->close();
+}
+
+void NewEntryForm::on_toolButton_passwordVisible_clicked()
+{
+    if(passwordVisible)
+    {
+        ui->lineEdit_password->setEchoMode(QLineEdit::EchoMode::Password);
+        ui->lineEdit_password2->setEnabled(true);
+        passwordVisible=false;
+    }
+    else
+    {
+        ui->lineEdit_password->setEchoMode(QLineEdit::EchoMode::Normal);
+        ui->lineEdit_password2->setEnabled(false);
+        passwordVisible=true;
+    }
 }

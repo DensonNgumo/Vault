@@ -21,10 +21,13 @@ public:
 private slots:
     void on_pushButton_open_clicked();
 
+    void on_toolButton_passwordVisible_clicked();
+
 private:
     Ui::OpenDatabaseForm *ui;
     HomeScreen* main;
     bool locked;
+    bool passwordVisible;
     QString dbID;
 };
 

@@ -7,47 +7,34 @@
 #include "databasesettingsform.h"
 #include "changemasterkeyform.h"
 #include "groups.h"
+#include "about.h"
 #include <QMessageBox>
 #include <QtSql>
 
 HomeScreen::HomeScreen(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::HomeScreen),dbPtr(new Database)
+    ui(new Ui::HomeScreen),dbPtr(new Database),locked(false),currentDbID("None"),currentGroupName("Default"),
+    currentKeyID("None"),currentPassID("None"),currentDbName("None")
 {
     ui->setupUi(this);
-    currentDbName="None";
+    //set default values  
     ui->treeWidget_groups->setColumnCount(1);
-    ui->treeWidget_groups->setHeaderLabel("Groups");
-    currentGroupName="Default";
-    currentKeyID="None";
-    currentDbID="None";
-    currentPassID="None";
-    locked=false;
+    ui->treeWidget_groups->setHeaderLabel("Groups");       
     LockWorkspace();
 }
 
 HomeScreen::~HomeScreen()
 {
     delete ui;
-   // delete databaseRef;
 }
-/*void HomeScreen::setDatabaseReference(Database * ref)
-{
-   // databaseRef=ref;
-}*/
-
 void HomeScreen::setDatabaseID(QString id)
 {
   currentDbID=id;
-
 }
 void HomeScreen::setDatabaseName(QString name)
 {
     currentDbName=name;
-
-    AddRoot(currentDbName);
-
-
+    AddRoot(currentDbName);//Adds the current database to group tree
     qDebug()<<currentDbName;
 }
 void HomeScreen::AddRoot(QString name)
@@ -60,14 +47,11 @@ void HomeScreen::AddRoot(QString name)
     {
         while(getGroups.next())
         {
-            AddChild(group,getGroups.value(0).toString());
+            AddChild(group,getGroups.value(0).toString());//add each group of the database as a child in the tree
         }
     }
 
-
 }
-
-
 void HomeScreen::AddChild(QTreeWidgetItem *parent,QString name)
 {
     QTreeWidgetItem *child=new QTreeWidgetItem();
@@ -76,7 +60,6 @@ void HomeScreen::AddChild(QTreeWidgetItem *parent,QString name)
 }
 void HomeScreen::RemoveRoot()
 {
-
     ui->treeWidget_groups->clear();
 }
 void HomeScreen::RefreshTree()
@@ -91,7 +74,6 @@ QString HomeScreen::getDatabaseID()
 }
 QString HomeScreen::getGroupID()
 {
-    //validate currentGroupName
     QSqlQuery id;
     id.prepare("select groupID from groups where dbID='"+currentDbID+"' and groupName='"+currentGroupName+"'");
     if(id.exec())
@@ -103,16 +85,14 @@ QString HomeScreen::getGroupID()
         }
     }
     else
-    {
-        qDebug()<<id.lastError().text();
-
+        QMessageBox::warning(this,tr("Error"),id.lastError().text());
         return "None" ;
-    }
-}
 
+}
 
 void HomeScreen::loadPasswords(QString id)
 {
+    //load all the passwords to the tableView
     QSqlQuery loadPass;
     QSqlQueryModel *load=new QSqlQueryModel();
     loadPass.prepare("select title,userName,password,notes,url,creationTime,modificationTime,passID from passwords where dbID='"+id+"'");
@@ -126,15 +106,15 @@ void HomeScreen::loadPasswords(QString id)
     load->setHeaderData(5,Qt::Horizontal,QObject::tr("Creation Time"));
     load->setHeaderData(6,Qt::Horizontal,QObject::tr("Modification Time"));
     load->setHeaderData(7,Qt::Horizontal,QObject::tr("Hidden"));
-     ui->tableView_info->setModel(load);
-     ui->tableView_info->hideColumn(7);
+    ui->tableView_info->setModel(load);
+    ui->tableView_info->hideColumn(7);
 
 }
 void HomeScreen::RefreshPasswords()
 {
     QSqlQuery loadPass;
     QSqlQueryModel *load=new QSqlQueryModel();
-    QString id=getGroupID();//validate
+    QString id=getGroupID();
     loadPass.prepare("select title,userName,password,notes,url,creationTime,modificationTime,passID from passwords where dbID='"+currentDbID+"' and groupID='"+id+"'");
 
     loadPass.exec();
@@ -167,6 +147,7 @@ void HomeScreen::DeletePassword(QString id)
 }
 void HomeScreen::loadKeys(QString id)
 {
+    //load all the serial/product keys to the tableView
     QSqlQuery loadKey;
     QSqlQueryModel *load=new QSqlQueryModel();
     loadKey.prepare("select title,serialKey,notes,keyID from serials where dbID='"+id+"'");
@@ -210,6 +191,32 @@ void HomeScreen::DeleteKey(QString id)
         qDebug()<<del.lastError().text();
     }
 }
+void HomeScreen::DeleteGroup(QString id)
+{
+    QSqlQuery delPasswords,delKeys,delGroup;
+    delPasswords.prepare("delete from passwords where groupID='"+id+"'");
+    delKeys.prepare("delete serials where groupID='"+id+"'");
+    delGroup.prepare("delete from groups where groupID='"+id+"'");
+    if(delPasswords.exec())
+    {
+        if(delKeys.exec())
+        {
+            if(delGroup.exec())
+            {
+                qDebug()<<"Group deleted....";
+                RefreshTree();
+
+            }
+            else
+                qDebug()<<"Error="<<delGroup.lastError().text();
+        }
+        else
+            qDebug()<<"Error="<<delKeys.lastError().text();
+    }
+    else
+        qDebug()<<"Error="<<delPasswords.lastError().text();
+}
+
 void HomeScreen::UnlockWorkspace()
 {
     ui->tableView_info->setVisible(true);
@@ -239,6 +246,7 @@ void HomeScreen::LockWorkspace()
     this->ui->actionEdit_View_Entry->setDisabled(true);
     this->ui->actionDuplicate_Entry->setDisabled(true);
     this->ui->actionEdit_Group->setDisabled(true);
+    this->ui->actionDelete_Group->setDisabled(true);
 
     if(locked)
     {
@@ -250,36 +258,38 @@ void HomeScreen::LockWorkspace()
 void HomeScreen::on_actionNew_Database_triggered()
 {
     MasterPasswordForm masterForm;
-    masterForm.setMainFormReference(this);
-    masterForm.exec();
+    masterForm.setMainFormReference(this);//set the master password form to reference the MainWindow
+    masterForm.exec();//open master password form
     masterForm.setModal(true);
     this->ui->actionDelete_Entry->setDisabled(true);
     this->ui->actionEdit_View_Entry->setDisabled(true);
     this->ui->actionDuplicate_Entry->setDisabled(true);
     this->ui->actionEdit_Group->setDisabled(true);
+    this->ui->actionDelete_Group->setDisabled(true);
 }
 
 void HomeScreen::on_actionOpen_Database_triggered()
 {
 
     OpenDatabaseForm openDB;
-    openDB.setMainFormReference(this);
+    openDB.setMainFormReference(this);//set the open database form to reference the MainWindow
     openDB.setModal(true);
-    openDB.exec();
+    openDB.exec();//show the open database form
     this->ui->actionDelete_Entry->setDisabled(true);
     this->ui->actionEdit_View_Entry->setDisabled(true);
     this->ui->actionDuplicate_Entry->setDisabled(true);
     this->ui->actionEdit_Group->setDisabled(true);
+    this->ui->actionDelete_Group->setDisabled(true);
     if(currentDbID=="None")
     {
+        //no database opened
         //do nothing
     }
     else
     {
-        loadPasswords(currentDbID);
-        loadKeys(currentDbID);
+        loadPasswords(currentDbID);//load all the database's passwords
+        loadKeys(currentDbID);//load all the database's serial/product keys
     }
-
 
 }
 
@@ -290,19 +300,18 @@ void HomeScreen::on_actionEdit_View_Entry_triggered()
     edit.setMainFormReference(this);
     if(currentPassID=="None")
     {
-        edit.setKeyEditFeatures(currentKeyID);
+        edit.setKeyEditFeatures(currentKeyID);//set the Edit Entry form to edit currently selected key
     }
     else
     {
-        edit.setEditFeatures(currentPassID);
+        edit.setEditFeatures(currentPassID);//set the Edit Entry form to edit currently selected password
     }
-
-
-    edit.exec();
+    edit.exec();//open the Edit Entry Form
 }
 
 void HomeScreen::on_actionAdd_New_Entry_triggered()
 {
+    //Add new password/key entry
     NewEntryForm entry;
     entry.setDatabaseID(currentDbID);
     entry.setGroupID(currentGroupName);
@@ -315,21 +324,21 @@ void HomeScreen::on_actionAdd_New_Entry_triggered()
 
 void HomeScreen::on_actionExit_triggered()
 {
-    dbPtr->connectionClose();
     QMessageBox::information(this,tr("Vault"),tr("Thank you for using Vault Password Safe"));
-    this->close();
+    dbPtr->connectionClose();//close database connection
+    this->close();//exit program
 }
 
 void HomeScreen::on_actionChange_Master_Key_triggered()
 {
-        ChangeMasterKeyForm form;
+        ChangeMasterKeyForm form;//Form to change the database's master key
         form.SetDbID(currentDbID);
         form.exec();
-
 }
 
 void HomeScreen::on_actionAdd_Group_triggered()
 {
+    //Open form to add a new Group
     Groups newGroup;
     newGroup.setMainFormReference(this);
     newGroup.setDbID(currentDbID);
@@ -343,10 +352,11 @@ void HomeScreen::on_treeWidget_groups_itemClicked(QTreeWidgetItem *item, int col
     {
         currentGroupName="Default";
     }
-
     else
     {
+        //Only show passwords and keys for currently selected group
         this->ui->actionEdit_Group->setDisabled(false);
+        this->ui->actionDelete_Group->setDisabled(false);
         RefreshPasswords();
         RefreshKeys();
     }
@@ -356,29 +366,29 @@ void HomeScreen::on_treeWidget_groups_itemClicked(QTreeWidgetItem *item, int col
 
 void HomeScreen::on_actionEdit_Group_triggered()
 {
-    //validate if database is opened first
     Groups editForm;
     editForm.setMainFormReference(this);
-    editForm.setEditFeatures(currentGroupName,currentDbID);
+    editForm.setEditFeatures(currentGroupName,currentDbID);//set Edit Form to edit currently selected group
     editForm.exec();
 }
 
 void HomeScreen::on_tableView_info_doubleClicked(const QModelIndex &index)
 {
+    //allow editing for currently selected password
    this->ui->actionDelete_Entry->setDisabled(false);
    this->ui->actionEdit_View_Entry->setDisabled(false);
    this->ui->actionDuplicate_Entry->setDisabled(false);
    int col= index.column();
    int row=index.row();
    currentPassID=index.sibling(row,7).data(0).toString();
-   if(col==0)
+   if(col==0)//if 1st column selected open EditForm
    {
      NewEntryForm edit;
      edit.setMainFormReference(this);
      edit.setEditFeatures(currentPassID);
      edit.exec();
    }
-   else
+   else//copy the text to the clipboard for pasting
    {
        QClipboard *clipboard=QApplication::clipboard();
        clipboard->setText(index.data(0).toString(),QClipboard::Clipboard);
@@ -390,7 +400,7 @@ void HomeScreen::on_tableView_info_doubleClicked(const QModelIndex &index)
 
 void HomeScreen::on_actionDelete_Entry_triggered()
 {
-   int ret= QMessageBox::warning(this,tr("Delete"),tr("Are You Sure You want to permanently delete the selected entry?\n"),QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel,QMessageBox::Cancel);
+   int ret= QMessageBox::warning(this,tr("Delete"),tr("Are You Sure You want to permanently delete the selected entry?\n"),QMessageBox::Yes|QMessageBox::Cancel,QMessageBox::Cancel);
    if (ret==QMessageBox::Yes)
    {
        if(currentKeyID=="None")
@@ -407,13 +417,6 @@ void HomeScreen::on_actionDelete_Entry_triggered()
    {
        qDebug()<<"Cancel pressed";
    }
-   if(ret==QMessageBox::No)
-   {
-       qDebug()<<"No pressed";
-   }
-
-
-
 }
 
 void HomeScreen::on_tableView_info_clicked(const QModelIndex &index)
@@ -422,7 +425,7 @@ void HomeScreen::on_tableView_info_clicked(const QModelIndex &index)
     this->ui->actionEdit_View_Entry->setDisabled(false);
     this->ui->actionDuplicate_Entry->setDisabled(false);
     int row=index.row();
-    currentPassID=index.sibling(row,7).data(0).toString();
+    currentPassID=index.sibling(row,7).data(0).toString();//set currentPassID to that of the currently selected record in the table
 }
 
 void HomeScreen::on_tableView_keyInfo_doubleClicked(const QModelIndex &index)
@@ -433,14 +436,14 @@ void HomeScreen::on_tableView_keyInfo_doubleClicked(const QModelIndex &index)
     int col= index.column();
     int row=index.row();
     currentKeyID=index.sibling(row,3).data(0).toString();
-    if(col==0)
+    if(col==0)//open EditForm to edit the Key's Information
     {
       NewEntryForm edit;
       edit.setMainFormReference(this);
       edit.setKeyEditFeatures(currentKeyID);
       edit.exec();
     }
-    else
+    else//copy selected text to the clipboard
     {
         QClipboard *clipboard=QApplication::clipboard();
         clipboard->setText(index.data(0).toString(),QClipboard::Clipboard);
@@ -451,7 +454,7 @@ void HomeScreen::on_tableView_keyInfo_doubleClicked(const QModelIndex &index)
 void HomeScreen::on_tableView_keyInfo_clicked(const QModelIndex &index)
 {
     int row=index.row();
-    currentKeyID=index.sibling(row,3).data(0).toString();
+    currentKeyID=index.sibling(row,3).data(0).toString();//set currentKeyID to that of the currently selected record in the table
     this->ui->actionDelete_Entry->setDisabled(false);
     this->ui->actionEdit_View_Entry->setDisabled(false);
     this->ui->actionDuplicate_Entry->setDisabled(false);
@@ -459,6 +462,7 @@ void HomeScreen::on_tableView_keyInfo_clicked(const QModelIndex &index)
 
 void HomeScreen::on_tabWidget_tabBarClicked(int index)
 {
+    //reset values every time the tabBar is clicked
     if(index==0)
     {
         currentKeyID="None";
@@ -467,10 +471,14 @@ void HomeScreen::on_tabWidget_tabBarClicked(int index)
     {
         currentPassID="None";
     }
+    this->ui->actionEdit_View_Entry->setDisabled(true);
+    this->ui->actionDelete_Entry->setDisabled(true);
+    this->ui->actionDuplicate_Entry->setDisabled(true);
 }
 
 void HomeScreen::on_actionLock_Workspace_triggered()
 {
+    //Hides all info on screen and prevents use till the user opens the database again
     locked=true;
     LockWorkspace();
     OpenDatabaseForm lock;
@@ -486,8 +494,40 @@ void HomeScreen::on_actionLock_Workspace_triggered()
 
 void HomeScreen::on_actionDatabase_Settings_triggered()
 {
+    //Change the details for the database
     DatabaseSettingsForm edit;
     edit.setMainFormReference(this);
     edit.setEdit(currentDbID);
     edit.exec();
+}
+
+
+
+void HomeScreen::on_actionDelete_Group_triggered()
+{
+    int ret= QMessageBox::warning(this,tr("Delete"),tr("Are You Sure You want to permanently delete the selected group?\nDoing so will also delete the entries in that group."),QMessageBox::Yes|QMessageBox::Cancel,QMessageBox::Cancel);
+    if (ret==QMessageBox::Yes)
+    {
+       QSqlQuery getID;
+       getID.prepare("select groupID from groups where groupName='"+currentGroupName+"' and dbID='"+currentDbID+"'");
+       if(getID.exec())
+       {
+           while(getID.next())
+           {
+               DeleteGroup(getID.value(0).toString());
+           }
+       }
+
+    }
+    if(ret==QMessageBox::Cancel)
+    {
+        qDebug()<<"Cancel pressed";
+    }
+}
+
+void HomeScreen::on_actionAbout_Vault_triggered()
+{
+    About about;
+    about.setModal(true);
+    about.exec();
 }

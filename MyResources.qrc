@@ -2,5 +2,6 @@
     <qresource prefix="/Images">
         <file>placeholder.gif</file>
         <file>member2.png</file>
+        <file>member1.ico</file>
     </qresource>
 </RCC>

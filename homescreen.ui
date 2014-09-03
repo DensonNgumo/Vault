@@ -13,6 +13,14 @@
     <height>491</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Tekton Pro</family>
+    <pointsize>11</pointsize>
+    <weight>75</weight>
+    <bold>true</bold>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Vault</string>
   </property>
@@ -23,6 +31,9 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -31,6 +42,14 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <widget class="QTreeWidget" name="treeWidget_groups">
+       <property name="font">
+        <font>
+         <family>BauerBodni BT</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
        </property>
@@ -53,6 +72,12 @@
        </column>
       </widget>
       <widget class="QTabWidget" name="tabWidget">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">color:red;</string>
        </property>
@@ -63,7 +88,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -160,6 +185,7 @@ color:red;
     </property>
     <addaction name="actionAdd_Group"/>
     <addaction name="actionEdit_Group"/>
+    <addaction name="actionDelete_Group"/>
     <addaction name="separator"/>
     <addaction name="actionAdd_New_Entry"/>
     <addaction name="actionEdit_View_Entry"/>
@@ -233,6 +259,9 @@ color:red;
    <property name="text">
     <string>New Database</string>
    </property>
+   <property name="toolTip">
+    <string>Create a new database</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -245,6 +274,9 @@ color:red;
   <action name="actionOpen_Database">
    <property name="text">
     <string>Open Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Open your database of passwords</string>
    </property>
    <property name="font">
     <font>
@@ -259,6 +291,9 @@ color:red;
    <property name="text">
     <string>Database Settings</string>
    </property>
+   <property name="toolTip">
+    <string>Change the details of your database</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -271,6 +306,9 @@ color:red;
   <action name="actionChange_Master_Key">
    <property name="text">
     <string>Change Master Key</string>
+   </property>
+   <property name="toolTip">
+    <string>Change your master password</string>
    </property>
    <property name="font">
     <font>
@@ -298,6 +336,9 @@ color:red;
    <property name="text">
     <string>Lock Workspace</string>
    </property>
+   <property name="toolTip">
+    <string>Lock your workspace</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -324,6 +365,9 @@ color:red;
    <property name="text">
     <string>Add Group</string>
    </property>
+   <property name="toolTip">
+    <string>Add a new group</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -337,6 +381,9 @@ color:red;
    <property name="text">
     <string>Edit Group</string>
    </property>
+   <property name="toolTip">
+    <string>Edit currently selected group</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -349,6 +396,9 @@ color:red;
   <action name="actionAdd_New_Entry">
    <property name="text">
     <string>Add New Entry</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a new entry</string>
    </property>
    <property name="font">
     <font>
@@ -528,6 +578,22 @@ color:red;
   <action name="actionAbout_Vault">
    <property name="text">
     <string>About Vault</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </action>
+  <action name="actionDelete_Group">
+   <property name="text">
+    <string>Delete Group</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete currently selected group</string>
    </property>
    <property name="font">
     <font>

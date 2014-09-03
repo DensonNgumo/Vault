@@ -11,7 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Vault</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="MyResources.qrc">
+    <normaloff>:/Images/member2.png</normaloff>
+    <normalon>:/Images/member2.png</normalon>
+    <activeon>:/Images/member2.png</activeon>:/Images/member2.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:red;</string>
@@ -152,6 +158,9 @@ padding:6px;</string>
       <property name="styleSheet">
        <string notr="true">background-color:white;</string>
       </property>
+      <property name="maxLength">
+       <number>100</number>
+      </property>
      </widget>
     </item>
     <item row="1" column="0">
@@ -202,11 +211,16 @@ padding:6px;</string>
       <property name="styleSheet">
        <string notr="true">background-color:white;</string>
       </property>
+      <property name="maxLength">
+       <number>100</number>
+      </property>
      </widget>
     </item>
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="MyResources.qrc"/>
+ </resources>
  <connections/>
 </ui>
