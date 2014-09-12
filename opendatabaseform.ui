@@ -10,6 +10,12 @@
     <height>249</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>411</width>
+    <height>249</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Vault</string>
   </property>
@@ -20,7 +26,8 @@
     <activeon>:/Images/member2.png</activeon>:/Images/member2.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:red;</string>
+   <string notr="true">background-color:red;
+color:white;</string>
   </property>
   <widget class="QPushButton" name="pushButton_open">
    <property name="geometry">
@@ -71,7 +78,9 @@ padding:6px;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:white;</string>
+    <string notr="true">background-color:white;
+color:black;
+</string>
    </property>
    <property name="text">
     <string>                                               Enter Master Key</string>
@@ -104,7 +113,7 @@ padding:6px;</string>
 </string>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
    </property>
   </widget>
   <widget class="Line" name="line_2">
@@ -158,11 +167,20 @@ padding:6px;</string>
       </item>
       <item>
        <widget class="QComboBox" name="comboBox_dbNames">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color:white;
 border:1px solid gray;
 padding:1px 18px 1px 3px;
-min-width:6em;</string>
+min-width:6em;
+color:black;
+</string>
         </property>
        </widget>
       </item>
@@ -192,7 +210,8 @@ min-width:6em;</string>
        <widget class="QLineEdit" name="lineEdit_masterPass">
         <property name="styleSheet">
          <string notr="true">background-color:white;
-selection-background-color:red;</string>
+selection-background-color:red;
+color:black;</string>
         </property>
         <property name="maxLength">
          <number>50</number>

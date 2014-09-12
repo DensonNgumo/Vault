@@ -95,7 +95,7 @@ void HomeScreen::loadPasswords(QString id)
     //load all the passwords to the tableView
     QSqlQuery loadPass;
     QSqlQueryModel *load=new QSqlQueryModel();
-    loadPass.prepare("select title,userName,password,notes,url,creationTime,modificationTime,passID from passwords where dbID='"+id+"'");
+    loadPass.prepare("select title,userName,hide,notes,url,creationTime,modificationTime,passID,password from passwords where dbID='"+id+"'");
     loadPass.exec();
     load->setQuery(loadPass);
     load->setHeaderData(0,Qt::Horizontal,QObject::tr("Title"));
@@ -108,14 +108,14 @@ void HomeScreen::loadPasswords(QString id)
     load->setHeaderData(7,Qt::Horizontal,QObject::tr("Hidden"));
     ui->tableView_info->setModel(load);
     ui->tableView_info->hideColumn(7);
-
+    ui->tableView_info->hideColumn(8);
 }
 void HomeScreen::RefreshPasswords()
 {
     QSqlQuery loadPass;
     QSqlQueryModel *load=new QSqlQueryModel();
     QString id=getGroupID();
-    loadPass.prepare("select title,userName,password,notes,url,creationTime,modificationTime,passID from passwords where dbID='"+currentDbID+"' and groupID='"+id+"'");
+    loadPass.prepare("select title,userName,hide,notes,url,creationTime,modificationTime,passID,password from passwords where dbID='"+currentDbID+"' and groupID='"+id+"'");
 
     loadPass.exec();
     load->setQuery(loadPass);
@@ -130,6 +130,7 @@ void HomeScreen::RefreshPasswords()
 
     ui->tableView_info->setModel(load);
     ui->tableView_info->hideColumn(7);
+    ui->tableView_info->hideColumn(8);
 }
 void HomeScreen::DeletePassword(QString id)
 {
@@ -252,6 +253,54 @@ void HomeScreen::LockWorkspace()
     {
         ui->actionLock_Workspace->setEnabled(true);
         ui->actionLock_Workspace->setText("Unlock Workspace");
+    }
+}
+void HomeScreen::DuplicateEntry(QString entryName, QString id)
+{
+    if(entryName=="passwords")
+    {
+        QSqlQuery getDetails,cloneDetails;
+        getDetails.exec("select title,userName,password,notes,url from passwords where passID='"+id+"'");
+        getDetails.next();
+        QString title,userName,password,notes,url,charac;
+        title=getDetails.value(0).toString();
+        userName=getDetails.value(1).toString();
+        password=getDetails.value(2).toString();
+        notes=getDetails.value(3).toString();
+        url=getDetails.value(4).toString();
+        charac="*****";
+        QString gID=getGroupID();
+       if( cloneDetails.exec("insert into passwords (dbID,groupID,title,userName,password,notes,url,creationTime,modificationTime,hide)"
+                           "values('"+currentDbID+"','"+gID+"','"+title+"','"+userName+"','"+password+"','"+notes+"','"+url+"',GETDATE(),GETDATE(),'"+charac+"')"))
+       {
+           qDebug()<<"Duplicated....";
+           RefreshPasswords();
+       }
+       else
+       {
+           qDebug()<<cloneDetails.lastError().text();
+       }
+    }
+    else
+    {
+        QSqlQuery getDetails,cloneDetails;
+        getDetails.exec("select title,serialKey,notes from serials where keyID='"+id+"'");
+        getDetails.next();
+        QString title,serialKey,notes;
+        title=getDetails.value(0).toString();
+        serialKey=getDetails.value(1).toString();
+        notes=getDetails.value(2).toString();
+        QString gID=getGroupID();
+       if( cloneDetails.exec("insert into serials (dbID,groupID,title,serialKey,notes)"
+                           "values('"+currentDbID+"','"+gID+"','"+title+"','"+serialKey+"','"+notes+"')"))
+       {
+           qDebug()<<"Duplicated....";
+           RefreshKeys();
+       }
+       else
+       {
+           qDebug()<<cloneDetails.lastError().text();
+       }
     }
 }
 
@@ -381,12 +430,18 @@ void HomeScreen::on_tableView_info_doubleClicked(const QModelIndex &index)
    int col= index.column();
    int row=index.row();
    currentPassID=index.sibling(row,7).data(0).toString();
-   if(col==0)//if 1st column selected open EditForm
+   if(col==0)//if 1st column double clicked open EditForm
    {
      NewEntryForm edit;
      edit.setMainFormReference(this);
      edit.setEditFeatures(currentPassID);
      edit.exec();
+   }
+   if(col==2)//if password column double clicked
+   {
+       QString pass=index.sibling(row,8).data(0).toString();
+       QClipboard *clipboard=QApplication::clipboard();
+       clipboard->setText(pass,QClipboard::Clipboard);
    }
    else//copy the text to the clipboard for pasting
    {
@@ -394,7 +449,6 @@ void HomeScreen::on_tableView_info_doubleClicked(const QModelIndex &index)
        clipboard->setText(index.data(0).toString(),QClipboard::Clipboard);
    }
    qDebug()<<QString::number(col);
-
 
 }
 
@@ -530,4 +584,16 @@ void HomeScreen::on_actionAbout_Vault_triggered()
     About about;
     about.setModal(true);
     about.exec();
+}
+
+void HomeScreen::on_actionDuplicate_Entry_triggered()
+{
+    if(currentKeyID=="None")//if a password is the currently selected item
+    {
+        DuplicateEntry("passwords",currentPassID);
+    }
+    else//a key is the currently selected item
+    {
+        DuplicateEntry("serials",currentKeyID);
+    }
 }

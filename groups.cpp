@@ -32,7 +32,7 @@ void Groups::setMainFormReference(HomeScreen * ref)
 void Groups::setEditFeatures(QString name, QString id)
 {
     dbID=id;
-    ui->label_Heading->setText("Edit Group");
+    ui->label_Heading->setText("\t\t Edit Group");
     edit=true;
     QString notes;
     QSqlQuery getGroupID;

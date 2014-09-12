@@ -3,5 +3,11 @@
         <file>placeholder.gif</file>
         <file>member2.png</file>
         <file>member1.ico</file>
+        <file>icon1.ico</file>
+        <file>icon2.ico</file>
+        <file>icon3.ico</file>
+        <file>icon4.ico</file>
+        <file>icon5.ico</file>
+        <file>icon6.ico</file>
     </qresource>
 </RCC>

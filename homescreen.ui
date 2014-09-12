@@ -192,7 +192,6 @@ color:red;
     <addaction name="actionDuplicate_Entry"/>
     <addaction name="actionDelete_Entry"/>
     <addaction name="separator"/>
-    <addaction name="actionSelect_All"/>
     <addaction name="separator"/>
     <addaction name="actionFind"/>
    </widget>
@@ -256,6 +255,10 @@ color:red;
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew_Database">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon1.ico</normaloff>:/Images/icon1.ico</iconset>
+   </property>
    <property name="text">
     <string>New Database</string>
    </property>
@@ -272,6 +275,10 @@ color:red;
    </property>
   </action>
   <action name="actionOpen_Database">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon1.ico</normaloff>:/Images/icon1.ico</iconset>
+   </property>
    <property name="text">
     <string>Open Database</string>
    </property>
@@ -288,6 +295,10 @@ color:red;
    </property>
   </action>
   <action name="actionDatabase_Settings">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon6.ico</normaloff>:/Images/icon6.ico</iconset>
+   </property>
    <property name="text">
     <string>Database Settings</string>
    </property>
@@ -362,6 +373,10 @@ color:red;
    </property>
   </action>
   <action name="actionAdd_Group">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon2.ico</normaloff>:/Images/icon2.ico</iconset>
+   </property>
    <property name="text">
     <string>Add Group</string>
    </property>
@@ -378,6 +393,10 @@ color:red;
    </property>
   </action>
   <action name="actionEdit_Group">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon2.ico</normaloff>:/Images/icon2.ico</iconset>
+   </property>
    <property name="text">
     <string>Edit Group</string>
    </property>
@@ -394,6 +413,10 @@ color:red;
    </property>
   </action>
   <action name="actionAdd_New_Entry">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon3.ico</normaloff>:/Images/icon3.ico</iconset>
+   </property>
    <property name="text">
     <string>Add New Entry</string>
    </property>
@@ -410,6 +433,10 @@ color:red;
    </property>
   </action>
   <action name="actionEdit_View_Entry">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon3.ico</normaloff>:/Images/icon3.ico</iconset>
+   </property>
    <property name="text">
     <string>Edit/View Entry</string>
    </property>
@@ -423,6 +450,10 @@ color:red;
    </property>
   </action>
   <action name="actionDuplicate_Entry">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon3.ico</normaloff>:/Images/icon3.ico</iconset>
+   </property>
    <property name="text">
     <string>Duplicate Entry</string>
    </property>
@@ -436,21 +467,12 @@ color:red;
    </property>
   </action>
   <action name="actionDelete_Entry">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon3.ico</normaloff>:/Images/icon3.ico</iconset>
+   </property>
    <property name="text">
     <string>Delete Entry</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
-  <action name="actionSelect_All">
-   <property name="text">
-    <string>Select All</string>
    </property>
    <property name="font">
     <font>
@@ -540,6 +562,10 @@ color:red;
    </property>
   </action>
   <action name="actionDatabase_Maintenance">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon6.ico</normaloff>:/Images/icon6.ico</iconset>
+   </property>
    <property name="text">
     <string>Database Maintenance</string>
    </property>
@@ -553,16 +579,28 @@ color:red;
    </property>
   </action>
   <action name="actionDelete_Duplicate_Entries">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon4.ico</normaloff>:/Images/icon4.ico</iconset>
+   </property>
    <property name="text">
     <string>Delete Duplicate Entries</string>
    </property>
   </action>
   <action name="actionDelete_Empty_Groups">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon2.ico</normaloff>:/Images/icon2.ico</iconset>
+   </property>
    <property name="text">
     <string>Delete Empty Groups</string>
    </property>
   </action>
   <action name="actionHelp_Contents">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon4.ico</normaloff>:/Images/icon4.ico</iconset>
+   </property>
    <property name="text">
     <string>Help Contents</string>
    </property>
@@ -576,6 +614,10 @@ color:red;
    </property>
   </action>
   <action name="actionAbout_Vault">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/member1.ico</normaloff>:/Images/member1.ico</iconset>
+   </property>
    <property name="text">
     <string>About Vault</string>
    </property>
@@ -589,6 +631,10 @@ color:red;
    </property>
   </action>
   <action name="actionDelete_Group">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/icon2.ico</normaloff>:/Images/icon2.ico</iconset>
+   </property>
    <property name="text">
     <string>Delete Group</string>
    </property>

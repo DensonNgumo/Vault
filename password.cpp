@@ -1,7 +1,7 @@
 #include "password.h"
 #include <QtSql>
 
-Password::Password()
+Password::Password():characters("*****")
 {
 }
 void Password::addNewEntry(QString newTitle, QString newUserName, QString newPassword, QString newNotes, QString newURL,QString gID, QString id)
@@ -10,8 +10,8 @@ void Password::addNewEntry(QString newTitle, QString newUserName, QString newPas
     title=newTitle; userName=newUserName; password=newPassword; notes=newNotes; url=newURL;dbID=id;groupID=gID;
 
     QSqlQuery add;
-    add.prepare("insert into passwords(title,userName,password,notes,url,dbID,groupID,creationTime,modificationTime)"
-                "values('"+title+"','"+userName+"','"+password+"','"+notes+"','"+url+"','"+dbID+"','"+groupID+"',GETDATE(),GETDATE())");
+    add.prepare("insert into passwords(title,userName,password,notes,url,dbID,groupID,creationTime,modificationTime,hide)"
+                "values('"+title+"','"+userName+"','"+password+"','"+notes+"','"+url+"','"+dbID+"','"+groupID+"',GETDATE(),GETDATE(),'"+characters+"')");
     if(add.exec())
         qDebug()<<"Password Entry added...";
     else

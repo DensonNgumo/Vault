@@ -101,13 +101,13 @@ QString Database::getDbName()
 void Database::InsertDefaults()
 {
     QString id=getDbID();
-    QString groupID;
-    QString defaultGroupName="Default",title="Example",password="12345",userName="User123",url="www.deenze.com",notes="Notes";
-    QString defaultKeyTitle="Software Y",key="xxxx-xxxx-xxxx-xxxx-xxxx";
+    QString defaultGroupName="Default",title="Example",password="12345",userName="User123",url="www.deenze.com",notes="Sample notes";
+    QString defaultKeyTitle="Software Y",key="xxxx-xxxx-xxxx-xxxx-xxxx",characters="*****";
     QSqlQuery groupDefault,passwordDefault,getGroupID,keyDefault;
     groupDefault.prepare("insert into groups(groupName,dbID) values('"+defaultGroupName+"','"+id+"')");
     if(groupDefault.exec()){qDebug()<<"group inserted..";}
     getGroupID.prepare("select groupID from groups where groupName='"+defaultGroupName+"' and dbID='"+id+"'");
+    QString groupID;
     if(getGroupID.exec())
     {
         while(getGroupID.next())
@@ -119,8 +119,8 @@ void Database::InsertDefaults()
     {
         qDebug()<<getGroupID.lastError().text();
     }
-    passwordDefault.prepare("insert into passwords(dbID,groupID,title,userName,password,notes,url,creationTime,modificationTime)"
-                            "values('"+id+"','"+groupID+"','"+title+"','"+userName+"','"+password+"','"+notes+"','"+url+"',GETDATE(),GETDATE())");
+    passwordDefault.prepare("insert into passwords(dbID,groupID,title,userName,password,notes,url,creationTime,modificationTime,hide)"
+                            "values('"+id+"','"+groupID+"','"+title+"','"+userName+"','"+password+"','"+notes+"','"+url+"',GETDATE(),GETDATE(),'"+characters+"')");
     if(passwordDefault.exec())
     {
         qDebug()<<"Password inserted...";

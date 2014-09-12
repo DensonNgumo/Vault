@@ -1,5 +1,6 @@
 #include "databasesettingsform.h"
 #include "ui_databasesettingsform.h"
+#include <QMessageBox>
 
 DatabaseSettingsForm::DatabaseSettingsForm(QWidget *parent) :
     QDialog(parent),
@@ -28,12 +29,16 @@ void DatabaseSettingsForm::setEdit(QString id)
 
 void DatabaseSettingsForm::on_buttonBox_Response_accepted()
 {
+    QString dbName,dbDescription,dbUserName;
+    dbName=ui->lineEdit_dbName->text();
+    dbDescription=ui->lineEdit_description->text();
+    dbUserName=ui->lineEdit_userName->text();
     if(edit)//changing details of currently open database
     {
         main->RemoveRoot();
-        newDatabase.SetDbName(ui->lineEdit_dbName->text());
-        newDatabase.SetDescription(ui->lineEdit_description->text());
-        newDatabase.SetUserName(ui->lineEdit_userName->text());
+        newDatabase.SetDbName(dbName);
+        newDatabase.SetDescription(dbDescription);
+        newDatabase.SetUserName(dbUserName);
         newDatabase.SetDbID(dbID);
         newDatabase.EditSettings();
         main->setDatabaseName(newDatabase.getDbName());
@@ -41,9 +46,19 @@ void DatabaseSettingsForm::on_buttonBox_Response_accepted()
     }
     else//entering details for a new database
     {
-        newDatabase.SetDbName(ui->lineEdit_dbName->text());
-        newDatabase.SetDescription(ui->lineEdit_description->text());
-        newDatabase.SetUserName(ui->lineEdit_userName->text());
+       //Make sure the database has a unique name
+        QSqlQuery check;
+        check.exec("select count(*) from databases where dbName='"+dbName+"'");
+        check.next();
+        int count=check.value(0).toInt();
+        if(count>0)
+        {
+            QMessageBox::warning(this,tr("Database Name"),tr("A database with that name already exists, would you please user another name"));
+            return;
+        }
+        newDatabase.SetDbName(dbName);
+        newDatabase.SetDescription(dbDescription);
+        newDatabase.SetUserName(dbUserName);
         newDatabase.SaveSettings();
         main->setDatabaseID(newDatabase.getDbID());
         main->setDatabaseName(newDatabase.getDbName());

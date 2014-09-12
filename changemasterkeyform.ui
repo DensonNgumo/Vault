@@ -10,6 +10,12 @@
     <height>309</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>476</width>
+    <height>309</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Vault</string>
   </property>
@@ -20,7 +26,8 @@
     <activeon>:/Images/member2.png</activeon>:/Images/member2.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 8, 12);</string>
+   <string notr="true">background-color: rgb(255, 8, 12);
+color:white;</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -44,6 +51,8 @@
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: white;
+color:black;
+
 
 
 
@@ -116,6 +125,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:white;
+color:black;
 </string>
    </property>
    <property name="maxLength">
@@ -186,7 +196,7 @@ padding:6px;</string>
     <string notr="true">background-color:black;</string>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
    </property>
   </widget>
   <widget class="Line" name="line_2">
@@ -236,7 +246,8 @@ padding:6px;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background:white;</string>
+    <string notr="true">background:white;
+color:black;</string>
    </property>
    <property name="maxLength">
     <number>50</number>

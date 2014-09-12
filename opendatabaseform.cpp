@@ -29,7 +29,7 @@ void OpenDatabaseForm::setMainFormReference(HomeScreen *mainForm)
 void OpenDatabaseForm::setLockFeatures(QString id)
 {
     locked=true;
-    ui->label_heading->setText("Unlock Database");
+    ui->label_heading->setText("\t\t Unlock Database");
     ui->label_dbName->setHidden(true);
     ui->comboBox_dbNames->setHidden(true);
     dbID=id;

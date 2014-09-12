@@ -47,7 +47,7 @@ void NewEntryForm::setMainFormReference(HomeScreen * ref)
 void NewEntryForm::setEditFeatures(QString id)
 {
     passID=id;
-    ui->label_Heading->setText("Edit Entry");
+    ui->label_Heading->setText("\t\t\t\tEdit Entry");
     QSqlQuery fill;
     fill.prepare("select title,userName,password,notes,url from passwords where passID='"+passID+"'");
     if(fill.exec())

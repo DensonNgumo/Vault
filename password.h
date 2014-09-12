@@ -18,6 +18,7 @@ private:
      QString dbID;
      QString groupID;
      QString passID;
+     QString characters;
 };
 
 #endif // PASSWORD_H
