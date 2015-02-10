@@ -19,6 +19,8 @@ public:
     void setMainFormReference(HomeScreen*);
     void setEditFeatures(QString id);
     void setKeyEditFeatures(QString id);
+    void setTempPassword(QString);
+    void setTempUserName(QString);
 
 
     ~NewEntryForm();
@@ -36,6 +38,8 @@ private slots:
 
 
     void on_toolButton_passwordVisible_clicked();
+
+    void on_toolButton_generatePassword_clicked();
 
 private:
     Ui::NewEntryForm *ui;

@@ -8,6 +8,7 @@
 #include "changemasterkeyform.h"
 #include "groups.h"
 #include "about.h"
+#include "password.h"
 #include <QMessageBox>
 #include <QtSql>
 
@@ -17,10 +18,218 @@ HomeScreen::HomeScreen(QWidget *parent) :
     currentKeyID("None"),currentPassID("None"),currentDbName("None")
 {
     ui->setupUi(this);
+    this->setWindowState(Qt::WindowMaximized);
     //set default values  
     ui->treeWidget_groups->setColumnCount(1);
     ui->treeWidget_groups->setHeaderLabel("Groups");       
     LockWorkspace();
+    ui->treeWidget_groups->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->tableView_info->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->tableView_keyInfo->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->treeWidget_groups,SIGNAL(customContextMenuRequested(const QPoint&)),this,SLOT(showGroupContextMenu(const QPoint&)));
+    connect(ui->tableView_info,SIGNAL(customContextMenuRequested(const QPoint&)),this,SLOT(showContextMenu(const QPoint&)));
+    connect(ui->tableView_keyInfo,SIGNAL(customContextMenuRequested(const QPoint&)),this,SLOT(showKeyContextMenu(const QPoint&)));
+
+}
+void HomeScreen::showGroupContextMenu(const QPoint& pos)
+{
+    QPoint globalPos=ui->treeWidget_groups->mapToGlobal(pos);
+    QMenu myMenu;
+    myMenu.addAction("Add Group");
+    myMenu.addAction("Edit Group");
+    myMenu.addAction("Delete Group");
+    QAction* selectedItem=myMenu.exec(globalPos);
+    if(!selectedItem)
+    {
+        qDebug()<<"none selected";
+
+    }
+    else
+    {
+        if(selectedItem->text()=="Add Group")
+        {
+            qDebug()<<"add group selected";
+            //Open form to add a new Group
+            Groups newGroup;
+            newGroup.setMainFormReference(this);
+            newGroup.setDbID(currentDbID);
+            newGroup.exec();
+
+        }
+        if(selectedItem->text()=="Edit Group")
+        {
+            qDebug()<<"edit group selected";
+            QModelIndex index=ui->treeWidget_groups->currentIndex();
+           currentGroupName=index.data(0).toString();
+           if(currentGroupName==currentDbName)
+              { currentGroupName="Default";}
+            Groups editForm;
+            editForm.setMainFormReference(this);
+            editForm.setEditFeatures(currentGroupName,currentDbID);//set Edit Form to edit currently selected group
+            editForm.exec();
+
+        }
+        if(selectedItem->text()=="Delete Group")
+        {
+           qDebug()<<"delete group selected";
+           QModelIndex index=ui->treeWidget_groups->currentIndex();
+           currentGroupName=index.data(0).toString();
+           if(currentGroupName==currentDbName)
+              { currentGroupName="Default";}
+            int ret= QMessageBox::warning(this,tr("Delete"),tr("Are You Sure You want to permanently delete the selected group?\nDoing so will also delete the entries in that group."),QMessageBox::Yes|QMessageBox::Cancel,QMessageBox::Cancel);
+            if (ret==QMessageBox::Yes)
+            {
+               QSqlQuery getID;
+               getID.prepare("select groupID from groups where groupName='"+currentGroupName+"' and dbID='"+currentDbID+"'");
+               if(getID.exec())
+               {
+                   while(getID.next())
+                   {
+                       DeleteGroup(getID.value(0).toString());
+                   }
+               }
+
+            }
+            if(ret==QMessageBox::Cancel)
+            {
+                qDebug()<<"Cancel pressed";
+            }
+        }
+    }
+}
+
+void HomeScreen::showContextMenu(const QPoint& pos)
+{
+    QPoint globalPos=ui->tableView_info->mapToGlobal(pos);
+    QMenu myMenu;
+    myMenu.addAction(QIcon(":/icon1.ico"),"Add Entry");
+    myMenu.addAction("Edit Entry");
+    myMenu.addAction("Delete Entry");
+    myMenu.addAction("Duplicate Entry");
+    myMenu.addSeparator();
+    myMenu.addAction("Generate Password");
+    QAction* selectedItem=myMenu.exec(globalPos);
+    if(!selectedItem)
+    {
+        qDebug()<<"none selected";
+    }
+    else
+    {
+        if(selectedItem->text()=="Add Entry")
+        {
+            qDebug()<<"add entry selected";
+            //Add new password/key entry
+            NewEntryForm entry;
+            entry.setDatabaseID(currentDbID);
+            entry.setGroupID(currentGroupName);
+            entry.setMainFormReference(this);
+            entry.setModal(true);
+            entry.exec();
+        }
+        if(selectedItem->text()=="Edit Entry")
+        {
+            qDebug()<<"Edit entry selected..";
+            QModelIndex index=ui->tableView_info->currentIndex();
+            currentPassID=index.sibling(index.row(),7).data(0).toString();//set currentPassID to that of the currently selected record in the table
+            //validate current passID and keyID
+            NewEntryForm edit;
+            edit.setMainFormReference(this);
+            edit.setEditFeatures(currentPassID);//set the Edit Entry form to edit currently selected password
+            edit.exec();//open the Edit Entry Form
+        }
+        if(selectedItem->text()=="Delete Entry")
+        {
+            qDebug()<<"Delete entry selected..";
+            QModelIndex index=ui->tableView_info->currentIndex();
+            currentPassID=index.sibling(index.row(),7).data(0).toString();//set currentPassID to that of the currently selected record in the table
+            int ret= QMessageBox::warning(this,tr("Delete"),tr("Are You Sure You want to permanently delete the selected entry?\n"),QMessageBox::Yes|QMessageBox::Cancel,QMessageBox::Cancel);
+            if (ret==QMessageBox::Yes)
+            {
+                    DeletePassword(currentPassID);
+            }
+            if(ret==QMessageBox::Cancel)
+            {
+                qDebug()<<"Cancel pressed";
+            }
+        }
+        if(selectedItem->text()=="Duplicate Entry")
+        {
+            qDebug()<<"Duplicate entry selected..";
+            QModelIndex index=ui->tableView_info->currentIndex();
+            currentPassID=index.sibling(index.row(),7).data(0).toString();//set currentPassID to that of the currently selected record in the table
+            DuplicateEntry("passwords",currentPassID);
+        }
+        if(selectedItem->text()=="Generate Password")
+        {
+            Password gen;
+            QString str =gen.generatePassword();
+            //Add new password entry with an already generated password
+            NewEntryForm entry;
+            entry.setDatabaseID(currentDbID);
+            entry.setGroupID(currentGroupName);
+            entry.setMainFormReference(this);
+            entry.setTempPassword(str);
+            entry.setTempUserName(currentDbID);
+            entry.setModal(true);
+            entry.exec();
+        }
+
+    }
+}
+void HomeScreen::showKeyContextMenu(const QPoint & pos)
+{
+    QPoint globalPos=ui->tableView_keyInfo->mapToGlobal(pos);
+    QMenu myMenu;
+    myMenu.addAction("Add Entry");
+    myMenu.addAction("Edit Entry");
+    myMenu.addAction("Delete Entry");
+    myMenu.addAction("Duplicate Entry");
+    QAction* selectedItem=myMenu.exec(globalPos);
+    if(!selectedItem)
+    {
+        //none selected
+    }
+    else
+    {
+        if(selectedItem->text()=="Add Entry")
+        {
+            NewEntryForm entry;
+            entry.setDatabaseID(currentDbID);
+            entry.setGroupID(currentGroupName);
+            entry.setMainFormReference(this);
+            entry.setModal(true);
+            entry.exec();
+        }
+        if(selectedItem->text()=="Edit Entry")
+        {
+            QModelIndex index=ui->tableView_keyInfo->currentIndex();
+            currentKeyID=index.sibling(index.row(),3).data(0).toString();
+            NewEntryForm edit;
+            edit.setMainFormReference(this);
+            edit.setKeyEditFeatures(currentKeyID);//set the Edit Entry form to edit currently selected key
+            edit.exec();//open the Edit Entry Form
+        }
+        if(selectedItem->text()=="Delete Entry")
+        {
+            QModelIndex index=ui->tableView_keyInfo->currentIndex();
+            currentKeyID=index.sibling(index.row(),3).data(0).toString();
+            int ret= QMessageBox::warning(this,tr("Delete"),tr("Are You Sure You want to permanently delete the selected entry?\n"),QMessageBox::Yes|QMessageBox::Cancel,QMessageBox::Cancel);
+            if (ret==QMessageBox::Yes)
+            {
+                    DeleteKey(currentKeyID);
+            }
+            if(ret==QMessageBox::Cancel)
+            {
+                qDebug()<<"Cancel pressed";
+            }
+        }
+        if(selectedItem->text()=="Duplicate Entry")
+        {
+            QModelIndex index=ui->tableView_keyInfo->currentIndex();
+            currentKeyID=index.sibling(index.row(),3).data(0).toString();
+            DuplicateEntry("serials",currentKeyID);
+        }
+    }
 }
 
 HomeScreen::~HomeScreen()
@@ -57,6 +266,7 @@ void HomeScreen::AddChild(QTreeWidgetItem *parent,QString name)
     QTreeWidgetItem *child=new QTreeWidgetItem();
     child->setText(0,name);
     parent->addChild(child);
+
 }
 void HomeScreen::RemoveRoot()
 {
@@ -344,7 +554,6 @@ void HomeScreen::on_actionOpen_Database_triggered()
 
 void HomeScreen::on_actionEdit_View_Entry_triggered()
 {
-    //validate current passID and keyID
     NewEntryForm edit;
     edit.setMainFormReference(this);
     if(currentPassID=="None")
@@ -436,12 +645,18 @@ void HomeScreen::on_tableView_info_doubleClicked(const QModelIndex &index)
      edit.setMainFormReference(this);
      edit.setEditFeatures(currentPassID);
      edit.exec();
+     return;
    }
    if(col==2)//if password column double clicked
    {
        QString pass=index.sibling(row,8).data(0).toString();
        QClipboard *clipboard=QApplication::clipboard();
        clipboard->setText(pass,QClipboard::Clipboard);
+       return;
+   }
+   if(col==4)//if url clicked
+   {
+       QDesktopServices::openUrl(QUrl(index.data(0).toString()));
    }
    else//copy the text to the clipboard for pasting
    {
@@ -597,3 +812,4 @@ void HomeScreen::on_actionDuplicate_Entry_triggered()
         DuplicateEntry("serials",currentKeyID);
     }
 }
+

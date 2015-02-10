@@ -29,9 +29,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="MyResources.qrc">
-    <normaloff>:/Images/member2.png</normaloff>
-    <normalon>:/Images/member2.png</normalon>
-    <activeon>:/Images/member2.png</activeon>:/Images/member2.png</iconset>
+    <normaloff>:/Images/images (3).png</normaloff>:/Images/images (3).png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:red;
@@ -173,6 +171,7 @@ padding:6px;</string>
      <widget class="QLineEdit" name="lineEdit_dbName">
       <property name="font">
        <font>
+        <family>Candida BT</family>
         <pointsize>9</pointsize>
         <weight>75</weight>
         <bold>true</bold>
@@ -209,7 +208,7 @@ color:black;</string>
      <widget class="QLineEdit" name="lineEdit_description">
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
+        <family>Candida BT</family>
         <pointsize>9</pointsize>
         <weight>75</weight>
         <bold>true</bold>
@@ -243,7 +242,7 @@ color:black;</string>
      <widget class="QLineEdit" name="lineEdit_userName">
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
+        <family>Candida BT</family>
         <pointsize>9</pointsize>
         <weight>75</weight>
         <bold>true</bold>

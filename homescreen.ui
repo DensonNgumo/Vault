@@ -26,7 +26,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="MyResources.qrc">
-    <normaloff>:/Images/member2.png</normaloff>:/Images/member2.png</iconset>
+    <normaloff>:/Images/images (3).png</normaloff>:/Images/images (3).png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -97,6 +97,14 @@
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
           <widget class="QTableView" name="tableView_info">
+           <property name="font">
+            <font>
+             <family>Candida BT</family>
+             <pointsize>11</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">color:black;</string>
            </property>
@@ -123,6 +131,12 @@
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
           <widget class="QTableView" name="tableView_keyInfo">
+           <property name="font">
+            <font>
+             <family>Candida BT</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">color:black;</string>
            </property>
@@ -172,7 +186,6 @@ color:red;
     <addaction name="separator"/>
     <addaction name="actionDatabase_Settings"/>
     <addaction name="actionChange_Master_Key"/>
-    <addaction name="actionPrint"/>
     <addaction name="actionLock_Workspace"/>
     <addaction name="actionExit"/>
    </widget>
@@ -193,44 +206,6 @@ color:red;
     <addaction name="actionDelete_Entry"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
-    <addaction name="actionFind"/>
-   </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-    <addaction name="actionShow_Toolbar"/>
-    <addaction name="actionShow_Entry_View"/>
-    <addaction name="separator"/>
-    <addaction name="actionAlways_on_Top"/>
-    <addaction name="separator"/>
-   </widget>
-   <widget class="QMenu" name="menuTools">
-    <property name="title">
-     <string>Tools</string>
-    </property>
-    <widget class="QMenu" name="menuDatabase_Tools">
-     <property name="font">
-      <font>
-       <family>Tekton Pro</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color:red;</string>
-     </property>
-     <property name="title">
-      <string>Database Tools</string>
-     </property>
-     <addaction name="actionDatabase_Maintenance"/>
-     <addaction name="actionDelete_Duplicate_Entries"/>
-     <addaction name="actionDelete_Empty_Groups"/>
-    </widget>
-    <addaction name="actionGenerate_Password"/>
-    <addaction name="menuDatabase_Tools"/>
-    <addaction name="actionOptions"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -241,17 +216,32 @@ color:red;
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
-   <addaction name="menuView"/>
-   <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="styleSheet">
+    <string notr="true">padding: 1px;
+spacing:25px;</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew_Database"/>
+   <addaction name="actionOpen_Database"/>
+   <addaction name="actionAdd_New_Entry"/>
+   <addaction name="actionLock_Workspace"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew_Database">
@@ -265,6 +255,9 @@ color:red;
    <property name="toolTip">
     <string>Create a new database</string>
    </property>
+   <property name="whatsThis">
+    <string>Create a new database for your passwords/keys</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -277,12 +270,15 @@ color:red;
   <action name="actionOpen_Database">
    <property name="icon">
     <iconset resource="MyResources.qrc">
-     <normaloff>:/Images/icon1.ico</normaloff>:/Images/icon1.ico</iconset>
+     <normaloff>:/Images/images (2).jpg</normaloff>:/Images/images (2).jpg</iconset>
    </property>
    <property name="text">
     <string>Open Database</string>
    </property>
    <property name="toolTip">
+    <string>Open your database of passwords</string>
+   </property>
+   <property name="whatsThis">
     <string>Open your database of passwords</string>
    </property>
    <property name="font">
@@ -305,6 +301,9 @@ color:red;
    <property name="toolTip">
     <string>Change the details of your database</string>
    </property>
+   <property name="whatsThis">
+    <string>Change the details of your database</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -315,10 +314,17 @@ color:red;
    </property>
   </action>
   <action name="actionChange_Master_Key">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/images (5).jpg</normaloff>:/Images/images (5).jpg</iconset>
+   </property>
    <property name="text">
     <string>Change Master Key</string>
    </property>
    <property name="toolTip">
+    <string>Change your master password</string>
+   </property>
+   <property name="whatsThis">
     <string>Change your master password</string>
    </property>
    <property name="font">
@@ -330,24 +336,18 @@ color:red;
     </font>
    </property>
   </action>
-  <action name="actionPrint">
-   <property name="text">
-    <string>Print</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
   <action name="actionLock_Workspace">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/images (8).jpg</normaloff>:/Images/images (8).jpg</iconset>
+   </property>
    <property name="text">
     <string>Lock Workspace</string>
    </property>
    <property name="toolTip">
+    <string>Lock your workspace</string>
+   </property>
+   <property name="whatsThis">
     <string>Lock your workspace</string>
    </property>
    <property name="font">
@@ -360,8 +360,15 @@ color:red;
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="MyResources.qrc">
+     <normaloff>:/Images/exit.png</normaloff>:/Images/exit.png</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="whatsThis">
+    <string>Exit the application</string>
    </property>
    <property name="font">
     <font>
@@ -375,13 +382,16 @@ color:red;
   <action name="actionAdd_Group">
    <property name="icon">
     <iconset resource="MyResources.qrc">
-     <normaloff>:/Images/icon2.ico</normaloff>:/Images/icon2.ico</iconset>
+     <normaloff>:/Images/icon1.ico</normaloff>:/Images/icon1.ico</iconset>
    </property>
    <property name="text">
     <string>Add Group</string>
    </property>
    <property name="toolTip">
     <string>Add a new group</string>
+   </property>
+   <property name="whatsThis">
+    <string>Add a new group for your passwords</string>
    </property>
    <property name="font">
     <font>
@@ -395,12 +405,15 @@ color:red;
   <action name="actionEdit_Group">
    <property name="icon">
     <iconset resource="MyResources.qrc">
-     <normaloff>:/Images/icon2.ico</normaloff>:/Images/icon2.ico</iconset>
+     <normaloff>:/Images/icon1.ico</normaloff>:/Images/icon1.ico</iconset>
    </property>
    <property name="text">
     <string>Edit Group</string>
    </property>
    <property name="toolTip">
+    <string>Edit currently selected group</string>
+   </property>
+   <property name="whatsThis">
     <string>Edit currently selected group</string>
    </property>
    <property name="font">
@@ -423,6 +436,9 @@ color:red;
    <property name="toolTip">
     <string>Add a new entry</string>
    </property>
+   <property name="whatsThis">
+    <string>Add a new entry</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -439,6 +455,9 @@ color:red;
    </property>
    <property name="text">
     <string>Edit/View Entry</string>
+   </property>
+   <property name="whatsThis">
+    <string>Edit/View currently selected entry</string>
    </property>
    <property name="font">
     <font>
@@ -457,6 +476,9 @@ color:red;
    <property name="text">
     <string>Duplicate Entry</string>
    </property>
+   <property name="whatsThis">
+    <string>Duplicate currently selected entry</string>
+   </property>
    <property name="font">
     <font>
      <family>Tekton Pro</family>
@@ -474,18 +496,8 @@ color:red;
    <property name="text">
     <string>Delete Entry</string>
    </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
-  <action name="actionFind">
-   <property name="text">
-    <string>Find</string>
+   <property name="whatsThis">
+    <string>Delete currently selected entry</string>
    </property>
    <property name="font">
     <font>
@@ -494,106 +506,6 @@ color:red;
      <weight>75</weight>
      <bold>true</bold>
     </font>
-   </property>
-  </action>
-  <action name="actionShow_Toolbar">
-   <property name="text">
-    <string>Show Toolbar</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
-  <action name="actionShow_Entry_View">
-   <property name="text">
-    <string>Show Entry View</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
-  <action name="actionAlways_on_Top">
-   <property name="text">
-    <string>Always on Top</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
-  <action name="actionGenerate_Password">
-   <property name="text">
-    <string>Generate Password</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
-  <action name="actionOptions">
-   <property name="text">
-    <string>Options</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
-  <action name="actionDatabase_Maintenance">
-   <property name="icon">
-    <iconset resource="MyResources.qrc">
-     <normaloff>:/Images/icon6.ico</normaloff>:/Images/icon6.ico</iconset>
-   </property>
-   <property name="text">
-    <string>Database Maintenance</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tekton Pro</family>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-  </action>
-  <action name="actionDelete_Duplicate_Entries">
-   <property name="icon">
-    <iconset resource="MyResources.qrc">
-     <normaloff>:/Images/icon4.ico</normaloff>:/Images/icon4.ico</iconset>
-   </property>
-   <property name="text">
-    <string>Delete Duplicate Entries</string>
-   </property>
-  </action>
-  <action name="actionDelete_Empty_Groups">
-   <property name="icon">
-    <iconset resource="MyResources.qrc">
-     <normaloff>:/Images/icon2.ico</normaloff>:/Images/icon2.ico</iconset>
-   </property>
-   <property name="text">
-    <string>Delete Empty Groups</string>
    </property>
   </action>
   <action name="actionHelp_Contents">
@@ -603,6 +515,9 @@ color:red;
    </property>
    <property name="text">
     <string>Help Contents</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open help file</string>
    </property>
    <property name="font">
     <font>
@@ -616,10 +531,13 @@ color:red;
   <action name="actionAbout_Vault">
    <property name="icon">
     <iconset resource="MyResources.qrc">
-     <normaloff>:/Images/member1.ico</normaloff>:/Images/member1.ico</iconset>
+     <normaloff>:/Images/images (3).png</normaloff>:/Images/images (3).png</iconset>
    </property>
    <property name="text">
     <string>About Vault</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open about</string>
    </property>
    <property name="font">
     <font>
@@ -633,12 +551,15 @@ color:red;
   <action name="actionDelete_Group">
    <property name="icon">
     <iconset resource="MyResources.qrc">
-     <normaloff>:/Images/icon2.ico</normaloff>:/Images/icon2.ico</iconset>
+     <normaloff>:/Images/icon1.ico</normaloff>:/Images/icon1.ico</iconset>
    </property>
    <property name="text">
     <string>Delete Group</string>
    </property>
    <property name="toolTip">
+    <string>Delete currently selected group</string>
+   </property>
+   <property name="whatsThis">
     <string>Delete currently selected group</string>
    </property>
    <property name="font">

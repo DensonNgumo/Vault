@@ -21,9 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="MyResources.qrc">
-    <normaloff>:/Images/member2.png</normaloff>
-    <normalon>:/Images/member2.png</normalon>
-    <activeon>:/Images/member2.png</activeon>:/Images/member2.png</iconset>
+    <normaloff>:/Images/images (3).png</normaloff>:/Images/images (3).png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background:red;
@@ -85,15 +83,21 @@ color:black;
     <widget class="QWidget" name="formLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>40</y>
+       <x>20</x>
+       <y>30</y>
        <width>491</width>
-       <height>205</height>
+       <height>210</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="1" column="2">
        <widget class="QLineEdit" name="lineEdit_userName">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>
@@ -176,6 +180,12 @@ color:black;
       </item>
       <item row="2" column="2">
        <widget class="QLineEdit" name="lineEdit_password">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>
@@ -189,6 +199,12 @@ color:black;
       </item>
       <item row="0" column="2">
        <widget class="QLineEdit" name="lineEdit_passwordTitle">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>
@@ -235,6 +251,12 @@ color:black;
       </item>
       <item row="5" column="2">
        <widget class="QLineEdit" name="lineEdit_url">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>
@@ -248,6 +270,12 @@ color:black;
       </item>
       <item row="3" column="2">
        <widget class="QLineEdit" name="lineEdit_password2">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>
@@ -261,6 +289,12 @@ color:black;
       </item>
       <item row="4" column="2">
        <widget class="QPlainTextEdit" name="plainTextEdit_Notes">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>
@@ -274,11 +308,14 @@ color:black;
     <widget class="QToolButton" name="toolButton_passwordVisible">
      <property name="geometry">
       <rect>
-       <x>570</x>
-       <y>90</y>
+       <x>520</x>
+       <y>80</y>
        <width>41</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="whatsThis">
+      <string>Show Password</string>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color:black;
@@ -307,6 +344,14 @@ padding:6px;</string>
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tekton Pro Cond</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="toolTip">
       <string extracomment="Hey"/>
@@ -344,6 +389,47 @@ padding:6px;</string>
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
+    <widget class="QToolButton" name="toolButton_generatePassword">
+     <property name="geometry">
+      <rect>
+       <x>590</x>
+       <y>80</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string extracomment="Generate Password"/>
+     </property>
+     <property name="toolTipDuration">
+      <number>2</number>
+     </property>
+     <property name="whatsThis">
+      <string>Generate Password</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:black;
+color:white;
+border-style:outset;
+border-width:2px;
+border-color:white;
+border-radius:10px;
+padding:6px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="MyResources.qrc">
+       <normaloff>:/Images/images (5).jpg</normaloff>:/Images/images (5).jpg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>64</width>
+       <height>64</height>
+      </size>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -357,6 +443,12 @@ padding:6px;</string>
        <width>298</width>
        <height>29</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Candida BT</family>
+       <pointsize>9</pointsize>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color:black;
@@ -385,7 +477,7 @@ padding:6px;</string>
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>9</x>
@@ -415,6 +507,12 @@ padding:6px;</string>
       </item>
       <item row="0" column="1">
        <widget class="QLineEdit" name="lineEdit_keyTitle">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>
@@ -443,6 +541,12 @@ padding:6px;</string>
       </item>
       <item row="1" column="1">
        <widget class="QLineEdit" name="lineEdit_key">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>
@@ -471,6 +575,12 @@ padding:6px;</string>
       </item>
       <item row="2" column="1">
        <widget class="QPlainTextEdit" name="plainTextEdit_keyNotes">
+        <property name="font">
+         <font>
+          <family>Candida BT</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:white;</string>
         </property>

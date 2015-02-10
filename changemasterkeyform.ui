@@ -21,9 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="MyResources.qrc">
-    <normaloff>:/Images/member2.png</normaloff>
-    <normalon>:/Images/member2.png</normalon>
-    <activeon>:/Images/member2.png</activeon>:/Images/member2.png</iconset>
+    <normaloff>:/Images/images (3).png</normaloff>:/Images/images (3).png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 8, 12);
@@ -120,6 +118,12 @@ color:black;
      <height>21</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Candida BT</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
@@ -162,6 +166,14 @@ color:black;
      <width>321</width>
      <height>61</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro Cond</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:black;
@@ -245,6 +257,12 @@ padding:6px;</string>
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Candida BT</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">background:white;
 color:black;</string>
@@ -264,6 +282,9 @@ color:black;</string>
      <width>41</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="whatsThis">
+    <string>Show Password</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:black;

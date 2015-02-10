@@ -34,6 +34,8 @@ public:
     void UnlockWorkspace();
     void DeleteGroup(QString);
     void DuplicateEntry(QString,QString);
+
+
     std::tr1::shared_ptr<Database>dbPtr;
     QString getDatabaseID();
     QString getGroupID();
@@ -82,6 +84,10 @@ private slots:
     void on_actionAbout_Vault_triggered();
 
     void on_actionDuplicate_Entry_triggered();
+    void showContextMenu(const QPoint &);
+    void showGroupContextMenu(const QPoint& pos);
+    void showKeyContextMenu(const QPoint&);
+
 
 private:
     Ui::HomeScreen *ui;

@@ -44,6 +44,12 @@ void NewEntryForm::setMainFormReference(HomeScreen * ref)
 {
     main=ref;
 }
+void NewEntryForm::setTempPassword(QString pass)
+{
+    ui->lineEdit_password->setText(pass);
+    ui->lineEdit_password2->setText(pass);
+}
+
 void NewEntryForm::setEditFeatures(QString id)
 {
     passID=id;
@@ -68,6 +74,17 @@ void NewEntryForm::setEditFeatures(QString id)
         qDebug()<<fill.lastError().text();
     }
 }
+void NewEntryForm::setTempUserName(QString id)
+{
+    QSqlQuery getUserName;
+    getUserName.prepare("select userName from databases where dbID='"+id+"'");
+    getUserName.exec();
+    while(getUserName.next())
+    {
+        ui->lineEdit_userName->setText(getUserName.value(0).toString());
+    }
+}
+
 void NewEntryForm::setKeyEditFeatures(QString id)
 {
     keyID=id;
@@ -183,4 +200,10 @@ void NewEntryForm::on_toolButton_passwordVisible_clicked()
         ui->lineEdit_password2->setEnabled(false);
         passwordVisible=true;
     }
+}
+
+void NewEntryForm::on_toolButton_generatePassword_clicked()
+{
+    Password random;//generate random password
+    setTempPassword(random.generatePassword());
 }

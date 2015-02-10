@@ -1,9 +1,18 @@
 #include "password.h"
 #include <QtSql>
+#include <cstdlib>
+#include <ctime>
+
+static const char alphanum[]="0123456789"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "abcdefghijklmnopqrstuvwxyz";
+
+int stringLength=sizeof(alphanum)-1;
 
 Password::Password():characters("*****")
 {
 }
+
 void Password::addNewEntry(QString newTitle, QString newUserName, QString newPassword, QString newNotes, QString newURL,QString gID, QString id)
 {
     //validation required!!!!!!
@@ -31,4 +40,19 @@ void Password::editEntry(QString newTitle, QString newUserName, QString newPassw
     {
         qDebug()<<"Password Entry not edited..."<<edit.lastError().text();
     }
+}
+char Password::generateRandom()
+{
+        return alphanum[rand()%stringLength];
+}
+
+QString Password::generatePassword()
+{
+    srand(time(0));
+    QString Str;
+    for(int i=0;i<10;i++)
+     {
+        Str+=generateRandom();
+     }
+    return Str;
 }

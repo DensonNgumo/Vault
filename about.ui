@@ -29,8 +29,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="MyResources.qrc">
-    <normaloff>:/Images/member1.ico</normaloff>
-    <activeon>:/Images/member2.png</activeon>:/Images/member1.ico</iconset>
+    <normaloff>:/Images/images (3).png</normaloff>:/Images/images (3).png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background:red;
@@ -39,17 +38,17 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>61</width>
-     <height>61</height>
+     <x>10</x>
+     <y>20</y>
+     <width>71</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="MyResources.qrc">:/Images/member2.png</pixmap>
+    <pixmap resource="MyResources.qrc">:/Images/images (3).png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -160,6 +159,14 @@ GNU General Public License.</string>
      <width>75</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro Cond</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">color:white;

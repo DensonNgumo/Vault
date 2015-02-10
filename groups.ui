@@ -21,9 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="MyResources.qrc">
-    <normaloff>:/Images/member2.png</normaloff>
-    <normalon>:/Images/member2.png</normalon>
-    <activeon>:/Images/member2.png</activeon>:/Images/member2.png</iconset>
+    <normaloff>:/Images/images (3).png</normaloff>:/Images/images (3).png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:red;</string>
@@ -60,6 +58,14 @@
      <width>301</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tekton Pro Cond</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:black;
@@ -120,6 +126,12 @@ padding:6px;</string>
      <width>133</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Candida BT</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">background:white;</string>
@@ -220,6 +232,12 @@ padding:6px;</string>
      <width>241</width>
      <height>91</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Candida BT</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">background:white;</string>
